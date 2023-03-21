@@ -4,7 +4,13 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily:{
+        'body':['Lexend Deca']
+      }
+      
+    }
+    
   },
   plugins: [],
 }
