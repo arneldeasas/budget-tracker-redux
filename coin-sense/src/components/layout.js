@@ -6,9 +6,15 @@ import { OpenBackdrop } from "./navbar";
 
 const Layout = ({children}) => {
     const [openBackdrop, setOpenBackdrop] = useState(false);
+
     const [openDropdown, setOpenDropdown] = useState(undefined);
+    const [closedDropdown, setClosedDropdown] = useState(true);
+
     const [openBudget, setOpenBudget] = useState(undefined);
     const [closedBudget, setClosedBudget] = useState(true);
+
+    const [openSavings, setOpenSavings] = useState(undefined);
+    const [closedSavings, setClosedSavings] = useState(true);
 
     const router = useRouter();
     const {month} = router.query
@@ -26,10 +32,13 @@ const Layout = ({children}) => {
         }
     }
 
-    const handleOpenDropDown=()=>{ 
-        setOpenDropdown(true)
+    const handleClickedDropDown=()=>{ 
+        setOpenDropdown(true);
+        setOpenBackdrop(true);
+        setClosedDropdown(false);
         if(openDropdown){
             setOpenDropdown(false);
+            setOpenBackdrop(false);
         }
     }
    
@@ -40,6 +49,10 @@ const Layout = ({children}) => {
         console.log(openBudget)
     }
 
+    const handleOpenSavings=()=>{
+        setClosedSavings(false);
+        setOpenSavings(true);
+    }
     
     const handleMonthSelection=(event)=>{
         console.log(event.target)
@@ -49,15 +62,23 @@ const Layout = ({children}) => {
 
     const handleCloseAnimation=(event)=>{
         
-        if(!openDropdown && event.target.id==='calendar-options'){
-            const wrapper = event.target.closest('.calendar-options-wrapper')
-            /* wrapper.classList.remove('calendar-animation-reverse'); */
-            wrapper.classList.add('hidden');
+        if(!openDropdown && event.target.id==='January' ){
+            /* setClosedBudget(true) */
+            setClosedDropdown(true);
+            console.log(event.target)
+            console.log(closedDropdown);
         }
 
         if(!openBudget && event.target.id ==='budget'){
             setClosedBudget(true);
         }
+
+        if(!openSavings && event.target.id === 'savings'){
+            setClosedSavings(true);
+            console.log(event.target)
+            console.log(openSavings)
+        }
+
     }
 
     return setOpenBackdrop, ( 
@@ -68,11 +89,14 @@ const Layout = ({children}) => {
             
             <div className={`prompt-box-container ${closedBudget? 'hidden':''} `}>
 
-                <div id='budget' onAnimationEnd={handleCloseAnimation} className={`prompt-box relative  
-                ${(openBudget===true||openBudget===false) && (openBudget ? 'pop-in-animation':'pop-out-animation')}`}>
+                <div 
+                    id='budget' 
+                    onAnimationEnd={handleCloseAnimation} 
+                    className={`prompt-box relative ${(openBudget ? 'pop-in-animation':'pop-out-animation')}`}
+                >
 
                     <div onClick={()=>{setOpenBudget(false)}} className="x-button"><i className="fa-regular fa-circle-xmark text-3xl text-[#02bfc9]"></i></div>
-                    <h2 className="text-center font-light text-md text-[#02bfc9]">My budget for this month is</h2>
+                    <h2 className="text-center font-light text-md text-[#02bfc9]">My <span className="font-bold">budget</span> for this month is</h2>
                     <div className="flex items-center justify-center">
                         <span className="block text-4xl font-bold text-[#0081a7]">₱</span>
                         <input placeholder="amount" type="number" name="budgetamount" id="budgetamount" className="amount-input"/>
@@ -82,6 +106,24 @@ const Layout = ({children}) => {
                 </div>
             </div>
             
+            <div className={`prompt-box-container ${closedSavings ? 'hidden':''} `}>
+
+                <div 
+                    id='savings' 
+                    onAnimationEnd={handleCloseAnimation} 
+                    className={`prompt-box relative ${openSavings ? 'pop-in-animation' : 'pop-out-animation'} `}
+                >
+
+                    <div onClick={()=>{setOpenSavings(false)}} className="x-button"><i className="fa-regular fa-circle-xmark text-3xl text-[#02bfc9]"></i></div>
+                    <h2 className="text-center font-light text-md text-[#02bfc9]">I want to <span className="font-bold">save</span> an amount of</h2>
+                    <div className="flex items-center justify-center">
+                        <span className="block text-4xl font-bold text-[#0081a7]">₱</span>
+                        <input placeholder="amount" type="number" name="budgetamount" id="budgetamount" className="amount-input"/>
+                    </div>
+                    <button className="confirm-button">confirm</button>
+
+                </div>
+            </div>
 
 
 
@@ -89,15 +131,15 @@ const Layout = ({children}) => {
                 
                 {/* whole calendar */}
                 <div className="calendar-dropdown-container ">
-                    <div onClick={()=>{handleOpenBackdrop();handleOpenDropDown()}} className="calendar-dropdown">
+                    <div onClick={handleClickedDropDown} className="calendar-dropdown">
                         <span className="block text-[20px] font-light">{month}</span>
                         <i className="fa-solid fa-chevron-down"></i>
                     </div>
                     
                     <div id='calendar-options' onClick={handleMonthSelection} onAnimationEnd={handleCloseAnimation} 
-                    className={`calendar-options-wrapper ${(openDropdown===undefined) && 'hidden'} 
-                    ${(openDropdown===true || openDropdown===false) && (openDropdown ? 'calendar-animation':'calendar-animation-reverse')}`}>
-                        <div >January</div>
+                    className={`calendar-options-wrapper ${closedDropdown ?'hidden':''} 
+                    ${ (openDropdown ? 'calendar-animation':'calendar-animation-reverse')}`}>
+                        <div id='January' >January</div>
                         <div>February</div>
                         <div>March</div>
                         <div>April</div>
@@ -117,7 +159,7 @@ const Layout = ({children}) => {
                 <div className=" dashboard-body flex flex-col justify-between h-full">
                     
                 {/* {children} */}
-                    <DashboardContent handleOpenBudget = {handleOpenBudget} />
+                    <DashboardContent handleOpenBudget = {handleOpenBudget} handleOpenSavings = {handleOpenSavings} />
                     <Navbar/>
                 </div>
                 

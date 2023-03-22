@@ -2,7 +2,7 @@ import Transactions from "./transactions";
 import Image from "next/image";
 import Navbar from "./navbar";
 const DashboardContent = (props) => {
-    const {handleOpenBudget} = props;
+    const {handleOpenBudget, handleOpenSavings} = props;
     return ( 
         <div className="dashboard-content relative z-0">
 
@@ -25,7 +25,7 @@ const DashboardContent = (props) => {
                     </div>
                 </div>
                 <div className="relative">
-                    <i class="fa-solid fa-pen-to-square edit-icon "></i>
+                    <i onClick={handleOpenSavings} class="fa-solid fa-pen-to-square edit-icon "></i>
                     <div className="capsule capsule-savings">Target Savings</div>
                     <div>
                         <h2>₱5970</h2>
