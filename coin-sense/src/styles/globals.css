@@ -196,14 +196,14 @@ a {
   @apply w-full relative z-[0] flex justify-between items-center rounded-full border-white border-4 bg-[#02bfc9] py-1 px-4 text-white
 }
 .calendar-options-wrapper{
-  @apply  absolute z-[10] top-[50px] left-[50%] translate-x-[-50%] mt-4 flex flex-col flex-wrap content-center max-h-[65vh] gap-2 min-w-[100%];
+  @apply   absolute z-[10] top-[50px] left-[50%] translate-x-[-50%] mt-4 flex flex-col flex-wrap content-center max-h-[65vh] gap-2 min-w-[100%];
 }
 .calendar-options-wrapper > div{
-  @apply font-extralight text-center text-white text-[18px]  px-2 py-1 w-[100%] max-w-[180px] rounded-2xl bg-[#02bfc9] opacity-0 ;
+  @apply scale-0 font-extralight text-center text-white text-[18px]  px-2 py-1 w-[100%] max-w-[180px] rounded-2xl bg-[#02bfc9];
   
 }
 .calendar-animation > div{
-
+  
   position: relative;
   transform-origin: center center;
   animation-name: zoomin;
@@ -218,75 +218,12 @@ a {
   animation-name: zoomout;
   animation-duration: .7s;
   animation-timing-function:linear;
-  animation-fill-mode: backwards;
+  animation-fill-mode:both;
   animation-direction: reverse;
 }
 
 
-@keyframes zoomin{
-  0%{
-    transform: scale(0);
-    opacity: 0;
-    top:-300px;
-    
-  }
-  30%{
-    
-    transform: scale(.3);
-  }
-  
-  50%{
-    transform: scale(1.4);
-  }
-  60%{
-    
-  }
-  70%{
-    opacity: 1;
-    transform: scale(.5);
-  }
-  90%{
-    
-  }
-  100%{
-    transform: scale(1);
-    top:0;
-    
-    opacity: 1;
-  }
-}
 
-@keyframes zoomout{
-  0%{
-    transform: scale(0);
-    opacity: 0;
-    top:-300px;
-    
-  }
-  30%{
-    opacity: 0;
-    transform: scale(.3);
-  }
-  
-  50%{
-    transform: scale(1.4);
-  }
-  60%{
-    
-  }
-  70%{
-    transform: scale(.5);
-  }
-  90%{
-    
-  }
-  100%{
-    transform: scale(1);
-    top:0;
-    opacity: 1;
-    
-  }
-}
 
 .calendar-options-wrapper > div:nth-child(1){
   animation-delay: 0s;
@@ -375,5 +312,136 @@ a {
 }
 
 .account-panel-slide{
-  @apply translate-x-[-350px]  ;
+  @apply translate-x-[-400px]  ;
+}
+
+.edit-icon{
+  @apply absolute right-1 top-1 text-2xl leading-[0px] p-[2px] rounded-lg text-white ;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+.x-button{
+  @apply absolute right-[-15px] top-[-15px] h-fit w-fit leading-[0] bg-white p-1 rounded-full
+}
+.prompt-box-container{
+  @apply fixed h-full w-full bg-gray-800/30 backdrop-blur-sm inset-1/2 -translate-x-1/2 z-[14] -translate-y-1/2 flex justify-center items-center
+}
+.prompt-box{
+  @apply scale-0  w-[80%] h-fit  bg-white rounded-2xl p-3;
+  box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.3);
+}
+.confirm-button{
+  @apply py-2 px-4 rounded-xl bg-[#02bfc9] text-white font-light block mx-auto my-4
+}
+.amount-input{
+  @apply bg-white m-3 p-2 block  w-[50%] rounded-xl font-bold text-4xl text-[#0081a7];
+  box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.2) inset;
+  -webkit-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.2) inset;
+  -moz-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.2) inset;
+}
+.amount-input::placeholder{
+  @apply text-2xl text-gray-300
+}
+.amount-input:focus{
+  @apply outline-none
+}
+
+
+
+@keyframes zoomin{
+  0%{
+    transform: scale(0);
+    opacity: 0;
+    top:-300px;
+    
+  }
+  30%{
+    
+    transform: scale(.3);
+  }
+  
+  50%{
+    transform: scale(1.4);
+  }
+  
+  70%{
+    opacity: 1;
+    transform: scale(.5);
+  }
+  
+  100%{
+    transform: scale(1);
+    top:0;
+    
+    opacity: 1;
+  }
+}
+
+@keyframes zoomout{
+  0%{
+    transform: scale(0);
+    opacity: 0;
+    top:-300px;
+    
+  }
+  30%{
+    opacity: 0;
+    transform: scale(.3);
+  }
+  
+  50%{
+    transform: scale(1.4);
+  }
+  
+  70%{
+    transform: scale(.5);
+  }
+  
+  100%{
+    transform: scale(1);
+    top:0;
+    opacity: 1;
+    
+  }
+}
+
+
+@keyframes pop-in{
+  0%{
+    opacity: 0;
+    transform: scale(0.5) translateY(-100%);
+  }
+  
+  100%{
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes pop-out{
+  0%{
+    opacity: 0;
+    transform: scale(0.5) translateY(-100%);
+  }
+  
+  100%{
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.pop-in-animation{
+  
+  animation-name: pop-in;
+  animation-duration: .5s;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
+}
+.pop-out-animation{
+  animation-name: pop-out;
+  animation-duration: .5s;
+  animation-timing-function: ease;
+  animation-fill-mode: backwards;
+  animation-direction: reverse;
 }

@@ -13,7 +13,7 @@ const Navbar = ({month}) => {
     }    
     return ( 
         <div className='bg-transparent flex justify-around py-1 text-3xl text-[#02bfc9] w-full '>
-            {openBackdrop && (<div onClick={handleClose} className="acc-backdrop fixed top-0 left-0 z-[10] w-full h-full bg-gray-800/30"></div>)}
+            {openBackdrop && (<div onClick={handleClose} className="acc-backdrop fixed top-0 left-0 z-[10] w-full h-full bg-gray-800/30 backdrop-blur-sm"></div>)}
 
             <div className={`account-panel ${openAccPanel ? 'account-panel-slide':''}`}>Account</div>
 
