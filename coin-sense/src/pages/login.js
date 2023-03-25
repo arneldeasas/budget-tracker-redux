@@ -1,8 +1,14 @@
 import {format} from "date-fns";
 import Link from "next/link";
+import { useRouter } from "next/router";
 const Login = () => {
     const today = new Date()
+    const router = useRouter();
 
+    const goToSignup = event =>{
+        event.preventDefault();
+        router.push('/signup')
+    }
     return ( 
         <div className="max-w-[600px] mx-auto h-[100vh] ">
             <div className="w-auto h-[100%] p-7 flex flex-col justify-end">
@@ -20,7 +26,7 @@ const Login = () => {
                     
                     <div>
                         <button className="login-button login ">Login</button>
-                        <button className="login-button signup ">signup</button>
+                        <button onClick={goToSignup} className="login-button signup ">signup</button>
                     </div>
                     <p className="text-[#0081a7] text-[14px] font-light text-center"> Created by Alex and friends. &copy; 2023</p>
                 </form>

@@ -303,7 +303,51 @@ a {
   @apply bg-[#02bfc9] border-transparent text-white;
 }
 
+.signup-page{
+  @apply p-6;
+}
+.signup-form{
+  @apply text-[#0081a7] font-light
+}
+.signup-form > div{
+  @apply my-7
+}
+.signup-form > div > *{
+  @apply block ;
 
+}
+.signup-input-container{
+  @apply flex items-center justify-between !important;
+}
+.signup-form div > input{
+  @apply p-1  font-normal tracking-wider ;
+}
+
+.signup-form div > input:focus{
+  @apply outline-none;
+}
+
+.signup-button{
+  @apply bg-transparent font-normal border-[#02bfc9] border-2 w-full p-2 rounded-full my-5
+}
+.signup-button:active{
+  @apply bg-[#02bfc9] text-white border-transparent
+}
+.signup-tooltip{
+  @apply scale-0 p-1 text-[12px] text-white h-fit bg-[#3fd9d7] z-[1] absolute bottom-[35px] w-full max-w-[300px] rounded-lg;
+}
+input:valid + i{
+  @apply hidden;
+}
+input:valid + i+div{
+  @apply hidden;
+}
+.signup-tooltip-container{
+  @apply absolute w-[60%] bottom-[0] right-[-7px] ;
+}
+.hide-tooltip{
+  @apply hidden !important;
+}
 .account-panel{
   @apply bg-white fixed top-0 right-[-400px] max-w-[400px] z-[11] w-[70%] h-full transition-transform duration-300;
   box-shadow: -4px 0px 6px 0px rgba(0,0,0,0.3);
@@ -320,34 +364,67 @@ a {
   text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 .x-button{
-  @apply absolute right-[-15px] top-[-15px] h-fit w-fit leading-[0] bg-white p-1 rounded-full
+  @apply absolute top-5 right-5 h-fit w-fit leading-[0] bg-[#02bfc9]  rounded-full p-0 duration-300;
+ transform: translate(40%,-40%)
 }
+.x-button:hover{
+  @apply p-20
+}
+.x-button i{
+  @apply duration-300
+}
+.x-button:hover > i{
+  @apply rotate-180
+}
+
 .prompt-box-container{
   @apply fixed h-full w-full bg-gray-800/30 backdrop-blur-sm inset-1/2 -translate-x-1/2 z-[14] -translate-y-1/2 flex justify-center items-center
 }
 .prompt-box{
-  @apply scale-0  w-[80%] max-w-[500px] h-fit  bg-white rounded-2xl p-3;
+  @apply scale-0  w-[70%] max-w-[500px] h-fit  bg-white rounded-2xl p-4 overflow-clip;
   box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.3);
   -webkit-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.3);
   -moz-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.3);
 }
+.prompt-box-title{
+  @apply mt-[100px] font-light text-3xl text-[#0081a7]
+}
 .confirm-button{
-  @apply py-2 px-4 rounded-xl bg-[#02bfc9] text-white font-light block mx-auto my-4
+  @apply py-2 px-4 w-[80%] mx-auto rounded-full bg-[#02bfc9] text-white font-light block  mt-10 mb-5
 }
 .amount-input{
-  @apply bg-white m-3 p-2 block  w-[50%] rounded-xl font-bold text-4xl text-[#0081a7];
-  box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.2) inset;
-  -webkit-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.2) inset;
-  -moz-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.2) inset;
+  @apply bg-white p-2 w-full  font-bold text-2xl font-light text-[#0081a7];
+  
 }
 .amount-input::placeholder{
-  @apply text-2xl text-gray-300
+  @apply text-xl text-gray-300 font-light
 }
 .amount-input:focus{
   @apply outline-none
 }
 
+.expense-type-container{
+  @apply flex flex-wrap gap-2
+}
+.expense-type-container > div{
+  @apply p-3 leading-3 bg-gray-200/80 text-[#02bfc9] font-light text-center rounded-md min-w-[30%] grow duration-200 cursor-pointer
+}
+.expense-type-container > div:hover{
+  @apply scale-90
+}
+#expense-description{
+  @apply bg-gray-100/90 p-1 border-[#0081a7]/20 border-[1px] w-full font-light text-[#0081a7]
+}
+#expense-description:focus{
+  @apply outline-none
+}
+#expense-description::placeholder{
+  @apply font-light
+}
 
+.details-properties{
+  @apply text-[#0081a7] font-light
+}
 
 @keyframes zoomin{
   0%{
@@ -431,6 +508,27 @@ a {
   }
 }
 
+@keyframes fade-in{
+  0%{
+    transform: scale(1);
+    opacity: 0;
+  }
+  100%{
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes fade-out{
+  0%{
+    transform: scale(1);
+    opacity: 0;
+  }
+  100%{
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 .pop-in-animation{
   
   animation-name: pop-in;
@@ -444,4 +542,11 @@ a {
   animation-timing-function: ease;
   animation-fill-mode: backwards;
   animation-direction: reverse;
+}
+
+.fade-in-animation{
+  animation: .3s fade-in ease-in forwards;
+}
+.fade-out-animation{
+  animation: .3s fade-out ease-in forwards reverse;
 }

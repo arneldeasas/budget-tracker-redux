@@ -2,7 +2,7 @@ import Transactions from "./transactions";
 import Image from "next/image";
 import Navbar from "./navbar";
 const DashboardContent = (props) => {
-    const {handleOpenBudget, handleOpenSavings} = props;
+    const {handleOpenBudget, handleOpenSavings, handleOpenAddExpense} = props;
     return ( 
         <div className="dashboard-content relative z-0">
 
@@ -59,7 +59,7 @@ const DashboardContent = (props) => {
                 <div className="flex items-center w-full justify-between text-[#02bfc9] mt-3 ">
                     <h2>Recent Transactions</h2>
                     <div className="flex gap-2 items-center">
-                        <i className="fa-solid fa-square-plus text-3xl block "></i>
+                        <i onClick={handleOpenAddExpense} className="fa-solid fa-square-plus text-3xl block "></i>
                         <div className="text-[12px] text-white p-1 px-2 rounded-full  bg-[#02bfc9]">See All</div>
                     </div>
                 </div>
