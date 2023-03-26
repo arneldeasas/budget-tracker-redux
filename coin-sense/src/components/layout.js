@@ -5,8 +5,13 @@ import DashboardContent from "./dashboardcontent";
 import { OpenBackdrop } from "./navbar";
 import Image from "next/image";
 const Layout = ({children}) => {
-
+    const [expenseAmount, setExpenseAmount] = useState('');
     const [descLength, setDescLength] = useState(0);
+    const [expenseType, setExpenseType] = useState('');
+    const [transactionDescription, setTransactionDescription] = useState('');
+    const [activeButton, setActiveButton] = useState(false);
+    const [budget, setBudget] = useState('');
+    const [save, setSave] = useState('');
 
     const [openBackdrop, setOpenBackdrop] = useState(false);
 
@@ -22,9 +27,11 @@ const Layout = ({children}) => {
     const [openAddExpense, setOpenAddExpense] = useState(false);
     const [closedAddExpense, setClosedAddExpense] = useState(true);
 
-    const [openTransactionDetails, setOpenTransactionDetails] = useState(true);
+    const [openTransactionDetails, setOpenTransactionDetails] = useState(false);
     const [closedTransactionDetails, setClosedTransactionDetails] = useState(true);
 
+    const [showDeletePrompt, setShowDeletePrompt] = useState(false);
+    const [showTransactionDetails, setShowTransactionDetails] = useState(true);
 
     const router = useRouter();
     const {month} = router.query
@@ -41,13 +48,35 @@ const Layout = ({children}) => {
             setOpenBackdrop(false);
         }
     } */
+    const chooseExpenseType = (e)=> {
+        
+        if(activeButton){
+            activeButton.classList.remove('selected-item')
+        }
+
+        if(e.target.closest(`.type`)){
+            const expenseType = e.target.id;
+            setActiveButton(e.target?.closest(`#${expenseType}`));
+            e.target.closest(`#${expenseType}`).classList.add('selected-item');
+        }
+        
+    }
 
     const handleExpenseDescChange=(event)=>{
+        setTransactionDescription(event.target.value);
         let textLength = event.target.value.length;
         setDescLength(textLength)
 
     }
 
+    const clearForm=(event)=>{
+        setDescLength(0);
+        setTransactionDescription('');
+        setExpenseAmount('');
+        setBudget('');
+        setSave('');
+    }
+    
 //animation related functions***************************************************
     const handleClickedDropDown=()=>{ 
         setOpenDropdown(true);
@@ -123,13 +152,17 @@ const Layout = ({children}) => {
                     className={`prompt-box relative  ${(openBudget ? 'pop-in-animation':'pop-out-animation')}`}
                 >
 
-                    <div onClick={()=>{setOpenBudget(false)}} className="x-button">
+                    <div onClick={()=>{setOpenBudget(false);clearForm()}} className="x-button">
                         <i className="fa-regular fa-circle-xmark text-3xl text-white"></i>
                     </div>
                     <h2 className="prompt-box-title">My budget <br></br>for this month is...</h2>
                     <div className="flex items-center border-b-[1px] border-[#02bfc9] my-3">
                         <span className="block text-2xl font-light text-[#0081a7]">₱</span>
-                        <input placeholder="Enter amount" type="number" name="budgetamount" id="budgetamount" className="amount-input"/>
+                        <input
+                            onChange={(e)=>{setBudget(e.target.value)}} 
+                            value = {budget}
+                            placeholder="Enter amount" 
+                            type="number" name="budgetamount" id="budgetamount" className="amount-input"/>
                     </div>
                     <button className="confirm-button">confirm</button>
                     
@@ -145,13 +178,18 @@ const Layout = ({children}) => {
                     className={`prompt-box relative  ${openSavings ? 'pop-in-animation' : 'pop-out-animation'} `}
                 >
                     
-                    <div onClick={()=>{setOpenSavings(false)}} className="x-button">
+                    <div onClick={()=>{setOpenSavings(false);clearForm()}} className="x-button">
                         <i className="fa-regular fa-circle-xmark text-3xl text-white"></i>
                     </div>
                     <h2 className="prompt-box-title">I want to save<br></br>an amount of...</h2>
                     <div className="flex items-center border-b-[1px] border-[#02bfc9] my-3">
                         <span className="block text-2xl font-light text-[#0081a7]">₱</span>
-                        <input placeholder="Enter amount" type="number" name="saveamount" id="saveamount" className="amount-input"/>
+                        <input 
+                            onChange={(e)=>{setSave(e.target.value)}}
+                            value={save}
+                            placeholder="Enter amount" 
+                            type="number" name="saveamount" 
+                            id="saveamount" className="amount-input"/>
                     </div>
                     <button className="confirm-button">confirm</button>
 
@@ -166,55 +204,89 @@ const Layout = ({children}) => {
                     onAnimationEnd={handleCloseAnimation} 
                     className={`prompt-box relative  ${openAddExpense ? 'pop-in-animation' : 'pop-out-animation'} `}
                 >
-                    
-                    <div onClick={()=>{setOpenAddExpense(false)}} className="x-button">
-                        <i className="fa-regular fa-circle-xmark text-3xl text-white"></i>
-                    </div>
-                    <h2 className="prompt-box-title">Today, <br></br>I have spent...</h2>
-                    <div className="flex items-center border-b-[1px] border-[#02bfc9] my-3">
-                        <span className="block text-2xl font-light text-[#0081a7]">₱</span>
-                        <input placeholder="Enter amount" type="number" name="saveamount" id="saveamount" className="amount-input"/>
-                    </div>
-                    <h2 className="text-[#0081a7] font-light my-8">for</h2>
-                    <div className="expense-type-container">
-                        <div id="food">Food</div>
-                        <div id="transport">Transport</div>
-                        <div id="school">School</div>
-                        <div id="health">Health</div>
-                        <div id="entertainment">Entertainment</div>
-                        <div id="others">Others</div>
+                    <form onSubmit={()=>{clearForm()}}>
+                        <div onClick={()=>{setOpenAddExpense(false);clearForm();}} className="x-button">
+                            <i className="fa-regular fa-circle-xmark text-3xl text-white"></i>
+                        </div>
+                        <h2 className="prompt-box-title">Today, <br></br>I have spent...</h2>
+                        <div className="flex items-center border-b-[1px] border-[#02bfc9] my-3">
+                            <span className="block text-2xl font-light text-[#0081a7]">₱</span>
+                            <input 
+                                onChange={(e)=>{setExpenseAmount(e.target.value)}} 
+                                placeholder="Enter amount" value={expenseAmount} 
+                                type="number" name="expenseAmount" id="expenseAmount" className="amount-input"
+                            />
+                        </div>
+                        <h2 className="text-[#0081a7] font-light my-8">for</h2>
+                        <div onClick={chooseExpenseType} className="expense-type-container">
+                            <div className="type" id="food">Food</div>
+                            <div className="type" id="transport">Transport</div>
+                            <div className="type" id="school">School</div>
+                            <div className="type" id="health">Health</div>
+                            <div className="type" id="entertainment">Entertainment</div>
+                            <div className="type" id="others">Others</div>
 
-                    </div>
-                    <label className="mt-8 mb-0 block text-[#0081a7] font-light my-6" htmlFor="expense-description">Description (optional):</label>
-                    <textarea onChange={handleExpenseDescChange} placeholder="Write something..." maxLength='120' name="expense-description" id="expense-description" cols="30" rows="3"></textarea>
-                    <p className="leading-3 font-light text-[14px] text-right text-gray-500">{descLength}/120</p>
-                    <button className="confirm-button">confirm</button>
+                        </div>
+                        <label className="mt-8 mb-0 block text-[#0081a7] font-light my-6" htmlFor="expense-description">Description (optional):</label>
+                        <textarea 
+                            onChange={handleExpenseDescChange} 
+                            value={transactionDescription}
+                            placeholder="Write something..." 
+                            maxLength='120' name="expense-description" id="expense-description" cols="30" rows="3">
+                        </textarea>
+                        <p className="leading-3 font-light text-[14px] text-right text-gray-500">{descLength}/120</p>
+                        <button className="confirm-button">confirm</button>
+                    </form>
+                    
 
                 </div>
             </div>
 
-            <div className={`prompt-box-container ${closedTransactionDetails ? '.hidden':''} `}>
+            <div className={`prompt-box-container ${closedTransactionDetails ? 'hidden':''} `}>
 
                 <div 
                     id='add-expense' 
                     onAnimationEnd={handleCloseAnimation} 
-                    className={`prompt-box w-[60%] relative  ${openTransactionDetails ? 'pop-in-animation' : 'pop-out-animation'} `}
+                    className={`prompt-box w-[60%] max-w-[300px] relative  ${openTransactionDetails ? 'pop-in-animation' : 'pop-out-animation'} `}
                 >
+                    {showDeletePrompt && (
+                        <div>
+                            <h2 className="text-xl font-light text-[#0081a7] text-center">Delete this transaction?</h2>
+                            <ul className="delete-prompt-options flex cursor-default">
+                                <li 
+                                    className="text-[#02bfc9] duration-150 bg-transparent border-[1px] border-[#02bfc9] hover:text-white hover:bg-[#02bfc9]"
+                                >YES</li>
+                                <li onClick={()=>{setShowDeletePrompt(false);setShowTransactionDetails(true);}} 
+                                    className="text-white bg-[#02bfc9] border-[1px] border-[#02bfc9] duration-150 hover:text-[#02bfc9] hover:bg-transparent"
+                                >NO</li>
+                            </ul>
+                        </div>
+                    )}
                     
-                    <div onClick={()=>{setOpenAddExpense(false)}} className="x-button">
-                        <i className="fa-regular fa-circle-xmark text-3xl text-white"></i>
-                    </div>
-                    <div className="bg-[#aad8db] w-fit h-fit rounded-full mx-auto"><Image className="p-10 box-content" src='/icons/food-icon.png' width='100' height='100'></Image></div>
-                    <h2 className="prompt-box-title text-center my-3">Food</h2>
+                    {showTransactionDetails && (
+                        <div>
+                            <div onClick={()=>{setShowDeletePrompt(true);setShowTransactionDetails(false)}} className='float-right'>
+                                <i class="fa-solid fa-trash-can text-gray-400 text-2xl"></i>
+                            </div>
+                            <div className="bg-[#aad8db] w-fit h-fit rounded-full mx-auto"><Image className="p-10 box-content" src='/icons/food-icon.png' width='100' height='100'></Image></div>
+                            <h2 className="prompt-box-title text-center my-3">Food</h2>
+                            
+                            <ul className="details-properties">
+                                <li>Price: <span>₱100</span></li>
+                                <li>Time: <span>11:00 am</span></li>
+                                <li>Date: <span>Fri, March 12, 2023</span></li>
+                                <li>Description:
+                                    <span className="block text-justify">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minima cum quos mollitia odio enim fuga error porro, saepe repudiandae dolores corrupti non sed earum, eum quidem nulla quis at ipsa!</span>
+                                </li>
+                            </ul>
+                            <div onClick={()=>{setOpenTransactionDetails(false)}} className="w-[80%] mx-auto">
+                                <button className="confirm-button">close</button>
+                            </div>
+                        </div>
+                    )}
                     
-                    <ul className="details-properties">
-                        <li>Price:</li>
-                        <li>Time:</li>
-                        <li>Date:</li>
-                        <li>Description:</li>
-                    </ul>
                     
-                    <button className="confirm-button">close</button>
+                    
 
                 </div>
             </div>
