@@ -6,27 +6,33 @@ const date = new Date();
 export const global = createSlice({
   name: 'global',
   initialState: {
+    userId: '',
     username:'',
     firstname: '',
     lastname: '',
+    currentMonth:'',
     selectedMonth: '',
 
   },
   reducers: {
     GetCurrentMonth: state =>{
-        state.selectedMonth = format(date, 'MMMM')
+        state.currentMonth = format(date, 'MMMM')
         
     },
     GetUsername: (state, action)=>{
         const userDetails = action.payload;
+        state.userId = userDetails.id;
         state.username = userDetails.username;
         state.firstname = userDetails.firstname;
         state.lastname = userDetails.lastname;
+    },
+    GetSelectedMonth: (state,action)=>{
+        state.selectedMonth = action.payload;
     }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { GetCurrentMonth, GetUsername} = global.actions
+export const { GetCurrentMonth, GetUsername, GetSelectedMonth} = global.actions
 
 export default global.reducer

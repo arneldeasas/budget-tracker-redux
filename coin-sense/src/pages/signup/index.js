@@ -18,16 +18,33 @@ const dataLoader = async (url)=>{
     
 }
 
-const dataUploader = async (url,upload) => {
+const dataUploader = async (url,type,upload) => {
     try {
-        fetch(url,{
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(upload)
-        })
-        .then(()=>{
-            return true
-        })
+        switch (type){
+            case 'POST':
+                fetch(url,{
+                    method: 'POST',
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(upload)
+                })
+                .then(()=>{
+                    return true
+                })
+                break;
+            case 'PATCH':
+                fetch(url,{
+                    method: 'PATCH',
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(upload)
+                })
+                .then(()=>{
+                    return true
+                })
+                break;
+                
+            default:
+        }
+        
     } catch (error) {
         
     }
@@ -131,7 +148,7 @@ const Signup = () => {
         }else{
 
             setTimeout(() => {
-                dataUploader('http://localhost:8000/users',userData) ? (router.push('/signup/account-registration-successful')) : '';
+                dataUploader('http://localhost:8000/users','POST',userData) ? (router.push('/signup/account-registration-successful')) : '';
             }, 2000);
         
         }
@@ -312,4 +329,4 @@ const Signup = () => {
 }
  
 export default Signup;
-export {dataLoader};
+export {dataLoader,dataUploader};

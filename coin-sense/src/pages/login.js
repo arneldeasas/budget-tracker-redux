@@ -36,6 +36,7 @@ const Login = () => {
             if(user[0].password === password){
                 console.log(password);
                 const userDetails = {
+                    id:user[0].id,
                     username,
                     firstname:user[0].firstname,
                     lastname:user[0].lastname

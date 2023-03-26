@@ -6,7 +6,20 @@
       "firstname": "Peng",
       "lastname": "De Asas",
       "id": 1,
-      "calendar": []
+      "calendar": [
+        {
+          "month": "March",
+          "budget": 0,
+          "goal": 0,
+          "expenses": []
+        },
+        {
+          "month": "January",
+          "budget": 0,
+          "goal": 0,
+          "expenses": []
+        }
+      ]
     },
     {
       "username": "arnel26",

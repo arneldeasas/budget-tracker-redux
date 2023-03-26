@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import DashboardContent from "./dashboardcontent";
 import { OpenBackdrop } from "./navbar";
 import Image from "next/image";
-import { useDispatch } from "react-redux";
-import { GetCurrentMonth } from "@/redux/global";
+import { dataUploader, dataLoader } from "@/pages/signup";
+import { useDispatch, useSelector } from "react-redux";
+import { GetCurrentMonth, GetSelectedMonth } from "@/redux/global";
 const Layout = ({children}) => {
     const dispatch = useDispatch();
     const [expenseAmount, setExpenseAmount] = useState('');
@@ -15,6 +16,8 @@ const Layout = ({children}) => {
     const [activeButton, setActiveButton] = useState(false);
     const [budget, setBudget] = useState('');
     const [save, setSave] = useState('');
+
+    const [showStart, setShowStart] = useState(true);
 
     const [openBackdrop, setOpenBackdrop] = useState(false);
 
@@ -40,6 +43,7 @@ const Layout = ({children}) => {
 
     const {month} = router.query
     
+    const {userId} = useSelector(state=>state.global)
     
     const handleChangeMonth = (e)=>{
         
@@ -87,10 +91,25 @@ const Layout = ({children}) => {
         
         if(event.target.className==='month'){
             setOpenDropdown(false);
-            
-            router.push(`/dashboard/${event.target.id}`)
+            dispatch(GetSelectedMonth(event.target.id));
+            router.push(`/dashboard/${event.target.id}`);
         }
         
+    }
+
+    const startMonth = async ()=>{
+        const user = await dataLoader(`http://localhost:8000/users/${userId}`);
+        console.log(user);
+        const monthProperties = {
+            month:month,
+            budget: 0,
+            goal: 0,
+            expenses:[]
+        }
+
+        user.calendar.push(monthProperties)
+        console.log(user);
+        dataUploader(`http://localhost:8000/users/${userId}`,'PATCH',user) ? setShowStart(false) : '';
     }
 //animation related functions***************************************************
     const handleClickedDropDown=()=>{ 
@@ -304,10 +323,13 @@ const Layout = ({children}) => {
                 </div>
             </div>
 
-            <div className="w-full h-[92%] fixed top-0 left-0 bg-gray-700/30 z-[2] backdrop-blur-md flex flex-col items-center justify-center text-white">
-                <h2 className="text-center text-xl drop-shadow-md">This month is empty</h2>
-                <button className="block bg-[#02bfc9] p-2 px-6 rounded-full font-light m-2 shadow-md">start</button>
-            </div>            
+            {showStart && (
+                <div className="w-full h-[92%] fixed top-0 left-0 bg-gray-700/30 z-[2] backdrop-blur-md flex flex-col items-center justify-center text-white">
+                    <h2 className="text-center text-xl drop-shadow-md">This month is empty</h2>
+                    <button onClick={startMonth} className="block bg-[#02bfc9] p-2 px-6 rounded-full font-light m-2 shadow-md">start</button>
+                </div>
+            )}
+                        
 
             <div className="dashboard w-full ">
                 
