@@ -9,12 +9,14 @@
       "calendar": [
         {
           "month": "March",
+          "opened": true,
           "budget": 0,
           "goal": 0,
           "expenses": []
         },
         {
           "month": "January",
+          "opened": false,
           "budget": 0,
           "goal": 0,
           "expenses": []

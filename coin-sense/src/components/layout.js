@@ -8,6 +8,7 @@ import { dataUploader, dataLoader } from "@/pages/signup";
 import { useDispatch, useSelector } from "react-redux";
 import { GetCurrentMonth, GetSelectedMonth } from "@/redux/global";
 const Layout = ({children}) => {
+    
     const dispatch = useDispatch();
     const [expenseAmount, setExpenseAmount] = useState('');
     const [descLength, setDescLength] = useState(0);
@@ -17,6 +18,7 @@ const Layout = ({children}) => {
     const [budget, setBudget] = useState('');
     const [save, setSave] = useState('');
 
+    
     const [showStart, setShowStart] = useState(true);
 
     const [openBackdrop, setOpenBackdrop] = useState(false);
@@ -43,12 +45,25 @@ const Layout = ({children}) => {
 
     const {month} = router.query
     
-    const {userId} = useSelector(state=>state.global)
+    const {userId , calendar, currentMonth} = useSelector(state=>state.global)
     
-    const handleChangeMonth = (e)=>{
-        
-        router.push(`/dashboard/${e.target.value}`)
+    console.log(calendar);
+       
+useEffect(()=>{
+    let currentMonthObject = calendar.filter(calendar=>calendar.month===month)
+    console.log(currentMonthObject)
+    currentMonthObject = currentMonthObject[0]
+    if(currentMonthObject===undefined){
+        console.log('sad')
+        setShowStart(true);
+    }else{
+        console.log(month)
+        console.log(currentMonthObject)
+        console.log('waw')
+        setShowStart(!currentMonthObject.opened)
     }
+},[])
+   
 
    /*  const handleOpenBackdrop=(e)=>{
         setOpenBackdrop(true);
@@ -91,6 +106,16 @@ const Layout = ({children}) => {
         
         if(event.target.className==='month'){
             setOpenDropdown(false);
+            let currentMonthObject = calendar.filter(calendar=>calendar.month===event.target.id)
+            currentMonthObject = currentMonthObject[0]
+            if(currentMonthObject===undefined){
+                console.log('sad')
+                setShowStart(true);
+            }else{
+                console.log('waw')
+                setShowStart(!currentMonthObject.opened)
+            }
+            
             dispatch(GetSelectedMonth(event.target.id));
             router.push(`/dashboard/${event.target.id}`);
         }
@@ -109,7 +134,7 @@ const Layout = ({children}) => {
 
         user.calendar.push(monthProperties)
         console.log(user);
-        dataUploader(`http://localhost:8000/users/${userId}`,'PATCH',user) ? setShowStart(false) : '';
+        dataUploader(`http://localhost:8000/users/${userId}`,'PATCH',user);
     }
 //animation related functions***************************************************
     const handleClickedDropDown=()=>{ 
@@ -148,8 +173,7 @@ const Layout = ({children}) => {
             /* setClosedBudget(true) */
             setClosedDropdown(true);
             setOpenBackdrop(false);
-            console.log(event.target)
-            console.log(closedDropdown);
+            
         }
 
         if(!openBudget && event.target.id ==='budget'){
@@ -322,7 +346,7 @@ const Layout = ({children}) => {
 
                 </div>
             </div>
-
+                      
             {showStart && (
                 <div className="w-full h-[92%] fixed top-0 left-0 bg-gray-700/30 z-[2] backdrop-blur-md flex flex-col items-center justify-center text-white">
                     <h2 className="text-center text-xl drop-shadow-md">This month is empty</h2>

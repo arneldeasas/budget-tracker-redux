@@ -12,7 +12,7 @@ export const global = createSlice({
     lastname: '',
     currentMonth:'',
     selectedMonth: '',
-
+    calendar:[],
   },
   reducers: {
     GetCurrentMonth: state =>{
@@ -25,6 +25,7 @@ export const global = createSlice({
         state.username = userDetails.username;
         state.firstname = userDetails.firstname;
         state.lastname = userDetails.lastname;
+        state.calendar = userDetails.calendar;
     },
     GetSelectedMonth: (state,action)=>{
         state.selectedMonth = action.payload;

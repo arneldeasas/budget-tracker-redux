@@ -39,8 +39,10 @@ const Login = () => {
                     id:user[0].id,
                     username,
                     firstname:user[0].firstname,
-                    lastname:user[0].lastname
+                    lastname:user[0].lastname,
+                    calendar:user[0].calendar
                 }
+                console.log(userDetails)
                 dispatch(GetCurrentMonth());
                 dispatch(GetUsername(userDetails));
                 
