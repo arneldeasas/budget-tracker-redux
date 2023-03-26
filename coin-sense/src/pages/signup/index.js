@@ -1,6 +1,37 @@
 import Link from "next/link";
 import { useState } from "react";
 
+const dataLoader = async (url)=>{
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        if(!response.ok ){
+            throw Error('Content not available');
+        }
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.log(error.message);
+    }
+
+    
+}
+
+const dataUploader = async (url,userData) => {
+    try {
+        fetch(url,{
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(userData)
+        })
+        .then(()=>{
+
+            }
+        )
+    } catch (error) {
+        
+    }
+}
 const Signup = () => {
     const [firstname, setFirstname] = useState('');
     const [isFnValid, setIsFnValid] = useState('');
@@ -21,6 +52,8 @@ const Signup = () => {
     const [cpassword, setCpassword] = useState('');
     const [isCpwValid, setIsCpwValid] = useState(false);
     const [cpwFocus, setCpwFocus] = useState('');
+
+    const [isUsernameTaken, setIsUsernameTaken] = useState(false);
 
     let namePattern = new RegExp(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/);
     let usernamePattern = new RegExp(/^[a-zA-Z0-9]{6,20}$/);
@@ -81,25 +114,49 @@ const Signup = () => {
 
         
     }
+
+    const handleSubmitRegistration = async (event) => {
+        event.preventDefault();
+        console.log(username)
+        let users = await dataLoader('http://localhost:8000/users');
+        if(users.map(user=>user.username ).includes(username)){
+            setIsUsernameTaken(true);
+        }
+    }
+
     return ( 
         <div className="signup-page">
             <div className="w-full py-[60px]">
-                <h1 className='text-4xl font-medium ml-2 text-center'><span className='text-[#0081a7]'>Coin</span><span className='text-[#3fd9d7]'>Sense</span></h1>
+                <h1 className='text-4xl font-medium ml-2 text-center'>
+                    <span className='text-[#0081a7]'>Coin</span><span className='text-[#3fd9d7]'>Sense</span></h1>
+                    <lord-icon
+    src="https://cdn.lordicon.com/nxooksci.json"
+    trigger="loop"
+    colors="primary:#121331"
+    state="loop"
+    style="width:250px;height:250px">
+</lord-icon>
             </div>
             <div className="w-full">
-                <form className="signup-form">
+                {isUsernameTaken && (
+                    <h2 className="font-bold text-[#f67659] text-center italic">username already exists</h2>
+                )}
+                <form onSubmit={handleSubmitRegistration} className="signup-form">
+
+                    {/* first name field */}
                     <div className="relative border-b-[1px] border-[#02bfc9] ">
                         <label htmlFor="fname">First name</label>
                         <div className="signup-input-container">
                             <input 
-                            onChange={(event)=>{handleInputChange('firstname',namePattern,event)}}
-                            onBlur={()=>setFnFocus(false)}
-                            onFocus={()=>{setFnFocus(true)}}
-                            value = {firstname}
-                            maxLength='30' 
-                            required 
-                            pattern="^[a-zA-Z]+(?: [a-zA-Z]+)*$" 
-                            type="text" name="fname" id="fname" className="grow"/>
+                                onChange={(event)=>{handleInputChange('firstname',namePattern,event)}}
+                                onBlur={()=>setFnFocus(false)}
+                                onFocus={()=>{setFnFocus(true)}}
+                                value = {firstname}
+                                maxLength='30' 
+                                required 
+                                pattern="^[a-zA-Z]+(?: [a-zA-Z]+)*$" 
+                                type="text" name="fname" id="fname" className="grow"
+                            />
 
                             <i className="fa-solid fa-circle-exclamation block p-1">
                                 
@@ -113,10 +170,9 @@ const Signup = () => {
                             
                         </div>
                         </div>
-                        
-                        
-                        
                     </div>
+
+                    {/* last name field */}
                     <div className="relative border-b-[1px] border-[#02bfc9]">
                         <label htmlFor="lname">Last name</label>
                         <div className="signup-input-container">
@@ -141,17 +197,20 @@ const Signup = () => {
                         
                         
                     </div>
+
+                    {/* username field */}
                     <div className="relative border-b-[1px] border-[#02bfc9]">
                         <label htmlFor="username">Username</label>
                         <div className="signup-input-container">
                             <input 
-                            onChange={(event)=>{handleInputChange('username',usernamePattern,event)}}
-                            onBlur={()=>setUnFocus(false)}
-                            onFocus={()=>{setUnFocus(true)}}
-                            value={username}
-                            maxLength='20' 
-                            required pattern="^[a-zA-Z0-9]{6,20}$" 
-                            type="text" name="username" id="username" className="grow"/>
+                                onChange={(event)=>{handleInputChange('username',usernamePattern,event)}}
+                                onBlur={()=>setUnFocus(false)}
+                                onFocus={()=>{setUnFocus(true)}}
+                                value={username}
+                                maxLength='20' 
+                                required pattern="^[a-zA-Z0-9]{6,20}$" 
+                                type="text" name="username" id="username" className="grow"
+                            />
                             <i className="fa-solid fa-circle-exclamation block p-1"></i>
                             <div className={`signup-tooltip-container ${unFocus?'':'hide-tooltip'}`}>
                                 <div className={`signup-tooltip ${isUnValid ? 'fade-out-animation':'fade-in-animation'} `}>
@@ -164,10 +223,9 @@ const Signup = () => {
                             
                             </div>
                         </div>
-                      
-                        
-                        
                     </div>
+
+                    {/* Password field */}
                     <div className="relative border-b-[1px] border-[#02bfc9]">
                         <label htmlFor="password">Password</label>
                         <div className="signup-input-container">
@@ -191,10 +249,9 @@ const Signup = () => {
                             
                             </div>
                         </div>
-                        
-                        
                     </div>
 
+                    {/* Password Matching field */}
                     <div className="relative border-b-[1px] border-[#02bfc9]">
                         <label htmlFor="cpassword">Re-type password</label>
                         <div className="signup-input-container">
@@ -233,3 +290,4 @@ const Signup = () => {
 }
  
 export default Signup;
+export {dataLoader};

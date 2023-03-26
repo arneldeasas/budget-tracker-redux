@@ -14,6 +14,7 @@ export default function Document() {
         <NextScript />
       </body>
       <script src="https://kit.fontawesome.com/aa63e7de64.js" crossorigin="anonymous"></script>
+      <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
     </Html>
   )
 }
