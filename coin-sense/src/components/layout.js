@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import DashboardContent from "./dashboardcontent";
 import { OpenBackdrop } from "./navbar";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { GetCurrentMonth } from "@/redux/global";
 const Layout = ({children}) => {
+    const dispatch = useDispatch();
     const [expenseAmount, setExpenseAmount] = useState('');
     const [descLength, setDescLength] = useState(0);
     const [expenseType, setExpenseType] = useState('');
@@ -34,6 +37,7 @@ const Layout = ({children}) => {
     const [showTransactionDetails, setShowTransactionDetails] = useState(true);
 
     const router = useRouter();
+
     const {month} = router.query
     
     
@@ -77,6 +81,17 @@ const Layout = ({children}) => {
         setSave('');
     }
     
+    const handleMonthSelection=(event)=>{
+        console.log(event.target.id)
+        dispatch(GetCurrentMonth());
+        
+        if(event.target.className==='month'){
+            setOpenDropdown(false);
+            
+            router.push(`/dashboard/${event.target.id}`)
+        }
+        
+    }
 //animation related functions***************************************************
     const handleClickedDropDown=()=>{ 
         setOpenDropdown(true);
@@ -105,10 +120,7 @@ const Layout = ({children}) => {
         setOpenAddExpense(true);
     }
 
-    const handleMonthSelection=(event)=>{
-        console.log(event.target)
-        
-    }
+    
 
 
     const handleCloseAnimation=(event)=>{
@@ -116,6 +128,7 @@ const Layout = ({children}) => {
         if(!openDropdown && event.target.id==='January' ){
             /* setClosedBudget(true) */
             setClosedDropdown(true);
+            setOpenBackdrop(false);
             console.log(event.target)
             console.log(closedDropdown);
         }
@@ -291,7 +304,10 @@ const Layout = ({children}) => {
                 </div>
             </div>
 
-
+            <div className="w-full h-[92%] fixed top-0 left-0 bg-gray-700/30 z-[2] backdrop-blur-md flex flex-col items-center justify-center text-white">
+                <h2 className="text-center text-xl drop-shadow-md">This month is empty</h2>
+                <button className="block bg-[#02bfc9] p-2 px-6 rounded-full font-light m-2 shadow-md">start</button>
+            </div>            
 
             <div className="dashboard w-full ">
                 
@@ -305,18 +321,18 @@ const Layout = ({children}) => {
                     <div id='calendar-options' onClick={handleMonthSelection} onAnimationEnd={handleCloseAnimation} 
                     className={`calendar-options-wrapper ${closedDropdown ?'hidden':''} 
                     ${ (openDropdown ? 'calendar-animation':'calendar-animation-reverse')}`}>
-                        <div id='January' >January</div>
-                        <div>February</div>
-                        <div>March</div>
-                        <div>April</div>
-                        <div>May</div>
-                        <div>June</div>
-                        <div>July</div>
-                        <div>August</div>
-                        <div>September</div>
-                        <div>October</div>
-                        <div>November</div>
-                        <div>December</div>
+                        <div className="month" id='January' >January</div>
+                        <div className="month" id='February'>February</div>
+                        <div className="month" id='March'>March</div>
+                        <div className="month" id='April'>April</div>
+                        <div className="month" id='May'>May</div>
+                        <div className="month" id='June'>June</div>
+                        <div className="month" id='July'>July</div>
+                        <div className="month" id='August'>August</div>
+                        <div className="month" id='September'>September</div>
+                        <div className="month" id='October'>October</div>
+                        <div className="month" id='November'>November</div>
+                        <div className="month" id='December'>December</div>
                     </div>
 
                    

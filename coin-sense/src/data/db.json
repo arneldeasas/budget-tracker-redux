@@ -1,11 +1,20 @@
 {
-    "users":[
-        {
-            "id": 1,
-            "firstname": "Arnel",
-            "lastname": "De Asas",
-            "username": "deasasarnel26",
-            "password": "deasasarnel26"
-        }
-    ]
+  "users": [
+    {
+      "username": "pengdeasas26",
+      "password": "Pengdeasas26",
+      "firstname": "Peng",
+      "lastname": "De Asas",
+      "id": 1,
+      "calendar": []
+    },
+    {
+      "username": "arnel26",
+      "password": "Arnel266",
+      "firstname": "Kazuma",
+      "lastname": "De Asas",
+      "calendar": [],
+      "id": 2
+    }
+  ]
 }

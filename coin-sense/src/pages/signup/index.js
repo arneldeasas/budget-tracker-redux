@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 const dataLoader = async (url)=>{
@@ -17,22 +18,23 @@ const dataLoader = async (url)=>{
     
 }
 
-const dataUploader = async (url,userData) => {
+const dataUploader = async (url,upload) => {
     try {
         fetch(url,{
             method: 'POST',
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(userData)
+            body: JSON.stringify(upload)
         })
         .then(()=>{
-
-            }
-        )
+            return true
+        })
     } catch (error) {
         
     }
 }
 const Signup = () => {
+    const router = useRouter();
+
     const [firstname, setFirstname] = useState('');
     const [isFnValid, setIsFnValid] = useState('');
     const [fnFocus,setFnFocus] = useState('');
@@ -54,6 +56,7 @@ const Signup = () => {
     const [cpwFocus, setCpwFocus] = useState('');
 
     const [isUsernameTaken, setIsUsernameTaken] = useState(false);
+    const [isSigningUp, setIsSigningUp] = useState(false);
 
     let namePattern = new RegExp(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/);
     let usernamePattern = new RegExp(/^[a-zA-Z0-9]{6,20}$/);
@@ -118,24 +121,29 @@ const Signup = () => {
     const handleSubmitRegistration = async (event) => {
         event.preventDefault();
         console.log(username)
+        const userData = {username,password,firstname,lastname,calendar:[]}
+
+        setIsSigningUp(true);
+        
         let users = await dataLoader('http://localhost:8000/users');
         if(users.map(user=>user.username ).includes(username)){
             setIsUsernameTaken(true);
+        }else{
+
+            setTimeout(() => {
+                dataUploader('http://localhost:8000/users',userData) ? (router.push('/signup/account-registration-successful')) : '';
+            }, 2000);
+        
         }
     }
 
     return ( 
         <div className="signup-page">
             <div className="w-full py-[60px]">
+            
                 <h1 className='text-4xl font-medium ml-2 text-center'>
                     <span className='text-[#0081a7]'>Coin</span><span className='text-[#3fd9d7]'>Sense</span></h1>
-                    <lord-icon
-    src="https://cdn.lordicon.com/nxooksci.json"
-    trigger="loop"
-    colors="primary:#121331"
-    state="loop"
-    style="width:250px;height:250px">
-</lord-icon>
+                    
             </div>
             <div className="w-full">
                 {isUsernameTaken && (
@@ -280,7 +288,21 @@ const Signup = () => {
                        
                     </div>
 
-                    <button className="signup-button" title="click me">Sign up</button>
+                    {!isSigningUp ? 
+                    (<button className="signup-button" title="click me">Sign up</button>)
+                    :
+                    (<button disabled className="signingup-button flex items-center justify-center" title="click me">
+                        <lord-icon
+                            src="https://cdn.lordicon.com/nxooksci.json"
+                            trigger="loop"
+                            colors="primary:#0081a7"
+                            state="loop"
+                            className='w-[60px] h-[60px] m-0'>
+                        </lord-icon>
+                        <span className="ml-1">Signing up...</span>
+                        
+                    </button>)}
+                    
                     <p className="text-[#0081a7] text-[14px] font-light text-center mt-3">Already have an account?&nbsp;
                     <Link href='/login'><span className="underline font-normal">Login here</span></Link> .</p>
                 </form>

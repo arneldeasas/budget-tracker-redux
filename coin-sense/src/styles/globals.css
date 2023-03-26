@@ -333,6 +333,9 @@ a {
 .signup-button:active{
   @apply bg-[#02bfc9] text-white border-transparent
 }
+.signingup-button{
+  @apply bg-transparent font-normal border-[#02bfc9] border-2 w-full p-2 rounded-full my-5
+}
 .signup-tooltip{
   @apply scale-0 p-1 text-[12px] text-white h-fit bg-[#3fd9d7] z-[1] absolute bottom-[35px] w-full max-w-[300px] rounded-lg;
 }

@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 
 
 const Navbar = ({month}) => {
+    const {username,firstname,lastname} = useSelector(state=>state.global)
+
     const router = useRouter();
     const [openBackdrop,setOpenBackdrop]=useState(false);
     const [openAccPanel,setOpenAccPanel] = useState(false);
@@ -26,8 +29,8 @@ const Navbar = ({month}) => {
                     <div className="profile-logo">
                         <i className="fa-solid fa-user text-[6.5rem] text-[white] drop-shadow-md"></i>
                     </div>
-                    <h2 className="text-[#0081a7] font-medium text-lg text-center">@username</h2>
-                    <h2 className="profile-name text-[#02bfc9] my-4">Arnel D. De Asas Jr</h2>
+                    <h2 className="text-[#0081a7] font-medium text-lg text-center">{username}</h2>
+                    <h2 className="profile-name text-[#02bfc9] my-4">{`${firstname} ${lastname}`}</h2>
                 </div>
                 
                 <button onClick={()=>{router.push('/login')}} className="text-white font-light bg-[#02bfc9] p-2 my-5 w-[80%] text-xl rounded-full block mx-auto">Logout</button>
