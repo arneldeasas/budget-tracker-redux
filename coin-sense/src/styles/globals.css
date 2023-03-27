@@ -109,25 +109,25 @@ a {
 }
 
 .dashboard-content{
-  @apply flex flex-col place-items-center max-h-[95%] gap-2 ;
+  @apply flex flex-col place-items-center h-[100%] gap-2 ;
 }
 .dashboard-content > div{
-  @apply w-full ;
+  @apply w-full  h-[100%] ;
 }
 .dashboard-content > div:nth-child(1){
-  @apply min-h-[30%] ;
+  @apply max-h-[30%]  ;
 }
 .dashboard-content > div:nth-child(2){
-  @apply max-h-[15%];
+  @apply h-[15%] max-h-[90px];
 }
 .dashboard-content > div:nth-child(3){
-  @apply min-h-[50%] overflow-hidden;
+  @apply max-h-[55%] h-[100%]  overflow-hidden;
 }
 .monthly-stat{
-  @apply flex flex-wrap gap-2 pt-6;
+  @apply flex flex-col flex-wrap gap-2 pt-6 ;
 }
 .monthly-stat > div{
-  @apply relative  p-1 px-2 w-[40%] grow rounded-xl border-white border-[3px];
+  @apply relative  p-1 px-2 min-w-[100px] grow rounded-xl border-white border-[3px];
   box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.19);
 -webkit-box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.19);
 -moz-box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.19);
@@ -151,7 +151,7 @@ a {
   @apply bg-[#f67659]
 }
 .capsule +div{
-  @apply font-bold text-3xl flex flex-col justify-center items-center
+  @apply font-bold text-3xl py-3 flex flex-col justify-center items-center
 }
 .capsule-balance +div{
   @apply text-[#fdb222] 
@@ -165,9 +165,7 @@ a {
 .capsule-expenses +div{
   @apply text-[#f67659]
 }
-.capsule+div{
-  @apply h-[60%]
-}
+
 .daily-stat-box{
   @apply border-x-[3px] border-[#02bfc9] rounded-[15px] flex justify-evenly py-1
 }
@@ -339,6 +337,17 @@ a {
 .signup-tooltip{
   @apply scale-0 p-1 text-[12px] text-white h-fit bg-[#3fd9d7] z-[1] absolute bottom-[35px] w-full max-w-[300px] rounded-lg;
 }
+.success{
+  @apply font-[800] text-[70px] text-[#02bfc9] tracking-[0];
+  font-family: 'Poppins';
+}
+.success-continue{
+  @apply p-2 w-[60%] max-w-[250px] text-white font-light bg-[#02bfc9] border-[2px] border-transparent rounded-full mt-10 duration-150;
+}
+.success-continue:active{
+  @apply bg-transparent text-[#02bfc9] border-[#02bfc9]
+}
+
 input:valid + i{
   @apply hidden;
 }

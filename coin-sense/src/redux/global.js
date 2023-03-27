@@ -1,13 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 import format from 'date-fns/format';
-
 const date = new Date();
-
 export const global = createSlice({
   name: 'global',
   initialState: {
+    user:{},
     userId: '',
-    username:'',
+    username: '',
     firstname: '',
     lastname: '',
     currentMonth:'',
@@ -15,6 +14,9 @@ export const global = createSlice({
     calendar:[],
   },
   reducers: {
+    SetUserData: (state,action)=>{
+      state.user = action.payload;
+    },
     GetCurrentMonth: state =>{
         state.currentMonth = format(date, 'MMMM')
         
@@ -34,6 +36,6 @@ export const global = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { GetCurrentMonth, GetUsername, GetSelectedMonth} = global.actions
+export const { SetUserData, GetCurrentMonth, GetUsername, GetSelectedMonth} = global.actions
 
 export default global.reducer

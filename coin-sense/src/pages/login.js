@@ -34,6 +34,8 @@ const Login = () => {
             console.log(password)
             console.log(user.password)
             if(user[0].password === password){
+                localStorage.setItem('id',user[0].id)
+                localStorage.setItem('SelectedMonth',format(date,'MMMM'))
                 console.log(password);
                 const userDetails = {
                     id:user[0].id,

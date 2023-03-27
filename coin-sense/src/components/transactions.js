@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useSelector } from "react-redux";
 const Transactions = () => {
 
     const transactions = [
@@ -81,6 +82,7 @@ const Transactions = () => {
           }
     ]
 
+    const {user} = useSelector(state=>state.global)
 
     return ( 
         <div className="flex flex-col gap-2 " >

@@ -10,15 +10,8 @@
         {
           "month": "March",
           "opened": true,
-          "budget": 0,
-          "goal": 0,
-          "expenses": []
-        },
-        {
-          "month": "January",
-          "opened": false,
-          "budget": 0,
-          "goal": 0,
+          "budget": "5000",
+          "goal": "700",
           "expenses": []
         }
       ]
@@ -30,6 +23,72 @@
       "lastname": "De Asas",
       "calendar": [],
       "id": 2
+    },
+    {
+      "username": "janella31",
+      "password": "Janella31",
+      "firstname": "Janella",
+      "lastname": "De Asas",
+      "calendar": [],
+      "id": 3
+    },
+    {
+      "username": "alex222",
+      "password": "Alex2222",
+      "firstname": "Alex",
+      "lastname": "Marasigan",
+      "calendar": [
+        {
+          "month": "March",
+          "opened": true,
+          "budget": 0,
+          "goal": 0,
+          "expenses": []
+        }
+      ],
+      "id": 4
+    },
+    {
+      "username": "shet123",
+      "password": "Shet123123",
+      "firstname": "shet",
+      "lastname": "shet",
+      "calendar": [
+        {
+          "month": "March",
+          "opened": true,
+          "budget": "5000",
+          "goal": "500",
+          "expenses": [
+            {
+              "day": "27",
+              "price": "30",
+              "type": "food",
+              "description": "aw",
+              "timeinseconds": "1679926960",
+              "time": "10:22 PM",
+              "date": "Mon, Mar 27, 2023"
+            },
+            {
+              "day": "27",
+              "price": "36",
+              "type": "transport",
+              "description": "mahal ng lrt",
+              "timeinseconds": "1679928403",
+              "time": "10:46 PM",
+              "date": "Mon, Mar 27, 2023"
+            }
+          ]
+        },
+        {
+          "month": "January",
+          "opened": true,
+          "budget": 0,
+          "goal": 0,
+          "expenses": []
+        }
+      ],
+      "id": 5
     }
   ]
 }

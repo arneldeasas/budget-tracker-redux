@@ -1,4 +1,5 @@
 import Navbar from "./navbar";
+import format from "date-fns/format";
 import Router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import DashboardContent from "./dashboardcontent";
@@ -6,10 +7,33 @@ import { OpenBackdrop } from "./navbar";
 import Image from "next/image";
 import { dataUploader, dataLoader } from "@/pages/signup";
 import { useDispatch, useSelector } from "react-redux";
-import { GetCurrentMonth, GetSelectedMonth } from "@/redux/global";
-const Layout = ({children}) => {
+import { SetUserData, GetCurrentMonth, GetSelectedMonth } from "@/redux/global";
+
+
+/* export async function getServerSideProps(context) {
+    
+    // Fetch data from an API or database using the context object
+    const res = await fetch(`http://localhost:8000/users/${id}`);
+    const data = await res.json();
+  
+    // Return the data as props
+    return {
+      props: {
+        data
+      },
+    };
+  } */
+
+
+
+
+const Layout = () => {
+    const clone = require('rfdc')();
+    const today = new Date();
     
     const dispatch = useDispatch();
+    const [rerender, setRerender] = useState(false);
+
     const [expenseAmount, setExpenseAmount] = useState('');
     const [descLength, setDescLength] = useState(0);
     const [expenseType, setExpenseType] = useState('');
@@ -42,35 +66,36 @@ const Layout = ({children}) => {
     const [showTransactionDetails, setShowTransactionDetails] = useState(true);
 
     const router = useRouter();
-
-    const {month} = router.query
+    //let {months} = router.query
+    const {user:UserData} = useSelector(state=>state.global);
+    const {stat} = useSelector(state=>state.transaction);
+    const [month, setMonth] = useState('')
     
-    const {userId , calendar, currentMonth} = useSelector(state=>state.global)
-    
-    console.log(calendar);
+    const [id, setId] = useState('');
+    //let mm = format(today, 'MMMM');
        
-useEffect(()=>{
-    let currentMonthObject = calendar.filter(calendar=>calendar.month===month)
-    console.log(currentMonthObject)
-    currentMonthObject = currentMonthObject[0]
-    if(currentMonthObject===undefined){
-        console.log('sad')
-        setShowStart(true);
-    }else{
-        console.log(month)
-        console.log(currentMonthObject)
-        console.log('waw')
-        setShowStart(!currentMonthObject.opened)
-    }
-},[])
-   
+useEffect( ()=>{
+    
 
-   /*  const handleOpenBackdrop=(e)=>{
-        setOpenBackdrop(true);
-        if(openDropdown){
-            setOpenBackdrop(false);
-        }
-    } */
+    const id = localStorage.getItem('id')
+    setId(localStorage.getItem('id'));
+    fetch(`http://localhost:8000/users/${id}`)
+    .then(res => res.json())
+    .then(data=>{
+        setId(data.id)
+        dispatch(SetUserData(data))
+        console.log(data)
+
+        let mm = localStorage.getItem('SelectedMonth')
+        dispatch(GetSelectedMonth(mm));
+        setMonth(mm)
+        const monthObj = data.calendar.filter(calendar=>calendar.month === mm).map(calendar=> calendar.opened)
+        setShowStart(!monthObj[0])
+        console.log(monthObj,month)
+    })
+    
+},[month, budget, save])
+   
     const chooseExpenseType = (e)=> {
         
         if(activeButton){
@@ -78,6 +103,7 @@ useEffect(()=>{
         }
 
         if(e.target.closest(`.type`)){
+            setExpenseType(e.target.id)
             const expenseType = e.target.id;
             setActiveButton(e.target?.closest(`#${expenseType}`));
             e.target.closest(`#${expenseType}`).classList.add('selected-item');
@@ -101,21 +127,12 @@ useEffect(()=>{
     }
     
     const handleMonthSelection=(event)=>{
-        console.log(event.target.id)
         dispatch(GetCurrentMonth());
         
         if(event.target.className==='month'){
             setOpenDropdown(false);
-            let currentMonthObject = calendar.filter(calendar=>calendar.month===event.target.id)
-            currentMonthObject = currentMonthObject[0]
-            if(currentMonthObject===undefined){
-                console.log('sad')
-                setShowStart(true);
-            }else{
-                console.log('waw')
-                setShowStart(!currentMonthObject.opened)
-            }
-            
+            setMonth(event.target.id)
+            localStorage.setItem('SelectedMonth',event.target.id)
             dispatch(GetSelectedMonth(event.target.id));
             router.push(`/dashboard/${event.target.id}`);
         }
@@ -123,19 +140,63 @@ useEffect(()=>{
     }
 
     const startMonth = async ()=>{
-        const user = await dataLoader(`http://localhost:8000/users/${userId}`);
+        const user = await dataLoader(`http://localhost:8000/users/${id}`);
         console.log(user);
         const monthProperties = {
             month:month,
+            opened: true,
             budget: 0,
             goal: 0,
             expenses:[]
         }
-
-        user.calendar.push(monthProperties)
-        console.log(user);
-        dataUploader(`http://localhost:8000/users/${userId}`,'PATCH',user);
+        setShowStart(false)
+        user.calendar = [
+            ...user.calendar,monthProperties
+        ]
+        /* user.calendar.push(monthProperties)
+        console.log(user); */
+        dataUploader(`http://localhost:8000/users/${id}`,'PATCH',user);
     }
+
+    const confirmBudget = ()=>{
+        //let tempUserData = {...UserData};
+        const tempUserData = clone(UserData);
+        const index = tempUserData.calendar.findIndex(calendar=>calendar.month===month)
+        tempUserData.calendar[index].budget = budget ;
+        dataUploader(`http://localhost:8000/users/${id}`,'PATCH',tempUserData);
+        clearForm();
+        setOpenBudget(false);
+    }
+
+    const confirmGoal = ()=>{
+        const tempUserData = clone(UserData);
+        const index = tempUserData.calendar.findIndex(calendar=>calendar.month===month)
+        tempUserData.calendar[index].goal = save;
+        dataUploader(`http://localhost:8000/users/${id}`,'PATCH',tempUserData);
+        clearForm();
+        setOpenSavings(false);
+    }
+   console.log()
+    const confirmExpense = ()=>{
+        const tempUserData = clone(UserData);
+        const expenseProperties = {
+            day: format(today,'d'),
+            price: expenseAmount,
+            type: expenseType,
+            description: transactionDescription,
+            timeinseconds: format(today, 't'),
+            time: format(today,'p'),
+            date: format(today, 'E, MMM d, yyyy'),
+            //newbalance: 
+        }
+        const index = tempUserData.calendar.findIndex(calendar=>calendar.month===month)
+        tempUserData.calendar[index].expenses.push(expenseProperties)
+        dataUploader(`http://localhost:8000/users/${id}`,'PATCH',tempUserData);
+        setExpenseAmount('');
+        setTransactionDescription('');
+        setOpenAddExpense(false);
+    }
+
 //animation related functions***************************************************
     const handleClickedDropDown=()=>{ 
         setOpenDropdown(true);
@@ -193,7 +254,8 @@ useEffect(()=>{
 
 //*******************************************************animation related functions */
 
-    return setOpenBackdrop, ( 
+
+    return ( 
         <div className="relative flex flex-col justify-center w-full  h-[100vh] p-5 bg-gradient-to-b from-[#fffdf7] to-[#c5eaeb]">
 
             {/* This section is for popups */}
@@ -220,7 +282,7 @@ useEffect(()=>{
                             placeholder="Enter amount" 
                             type="number" name="budgetamount" id="budgetamount" className="amount-input"/>
                     </div>
-                    <button className="confirm-button">confirm</button>
+                    <button onClick={confirmBudget} className="confirm-button">confirm</button>
                     
                 </div>
             </div>
@@ -247,7 +309,7 @@ useEffect(()=>{
                             type="number" name="saveamount" 
                             id="saveamount" className="amount-input"/>
                     </div>
-                    <button className="confirm-button">confirm</button>
+                    <button onClick={confirmGoal} className="confirm-button">confirm</button>
 
                 </div>
             </div>
@@ -260,11 +322,14 @@ useEffect(()=>{
                     onAnimationEnd={handleCloseAnimation} 
                     className={`prompt-box relative  ${openAddExpense ? 'pop-in-animation' : 'pop-out-animation'} `}
                 >
-                    <form onSubmit={()=>{clearForm()}}>
+                    <form onSubmit={confirmExpense}>
+
                         <div onClick={()=>{setOpenAddExpense(false);clearForm();}} className="x-button">
                             <i className="fa-regular fa-circle-xmark text-3xl text-white"></i>
                         </div>
+
                         <h2 className="prompt-box-title">Today, <br></br>I have spent...</h2>
+
                         <div className="flex items-center border-b-[1px] border-[#02bfc9] my-3">
                             <span className="block text-2xl font-light text-[#0081a7]">₱</span>
                             <input 
@@ -273,7 +338,9 @@ useEffect(()=>{
                                 type="number" name="expenseAmount" id="expenseAmount" className="amount-input"
                             />
                         </div>
+
                         <h2 className="text-[#0081a7] font-light my-8">for</h2>
+
                         <div onClick={chooseExpenseType} className="expense-type-container">
                             <div className="type" id="food">Food</div>
                             <div className="type" id="transport">Transport</div>
@@ -281,8 +348,8 @@ useEffect(()=>{
                             <div className="type" id="health">Health</div>
                             <div className="type" id="entertainment">Entertainment</div>
                             <div className="type" id="others">Others</div>
-
                         </div>
+
                         <label className="mt-8 mb-0 block text-[#0081a7] font-light my-6" htmlFor="expense-description">Description (optional):</label>
                         <textarea 
                             onChange={handleExpenseDescChange} 
