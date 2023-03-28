@@ -323,7 +323,7 @@ useEffect( ()=>{
 
 
     return ( 
-        <div className="relative flex flex-col justify-center w-full  h-[100vh] p-5 bg-gradient-to-b from-[#fffdf7] to-[#c5eaeb]">
+        <div className="layout ">
 
             {/* This section is for popups */}
             {openBackdrop  && (<div className="fixed left-0 w-[100vw] h-[100vh] bg-gray-800/10 z-[3] backdrop-blur-sm"></div>)}
@@ -471,7 +471,14 @@ useEffect( ()=>{
                             <div onClick={()=>{setShowDeletePrompt(true);setShowTransactionDetails(false)}} className='float-right'>
                                 <i class="fa-solid fa-trash-can text-gray-400 text-2xl"></i>
                             </div>
-                            <div className="bg-[#aad8db] w-fit h-fit rounded-full mx-auto"><Image className="p-10 box-content" src='/icons/food-icon.png' width='100' height='100'></Image></div>
+                            <div className="bg-[#aad8db] w-fit h-fit rounded-full mx-auto">
+                                {transactionDetails.type === 'food' && <Image className="p-10 box-content" src='/icons/food-icon.png' width='80' height='80'></Image>}
+                                {transactionDetails.type === 'school' && <Image className="p-10 box-content" src='/icons/school.png' width='80' height='80'></Image>}
+                                {transactionDetails.type === 'transport' && <Image className="p-10 box-content" src='/icons/transport.png' width='80' height='80'></Image>}
+                                {transactionDetails.type === 'health' && <Image className="p-10 box-content" src='/icons/health.png' width='80' height='80'></Image>}
+                                {transactionDetails.type === 'entertainment' && <Image className="p-10 box-content" src='/icons/entertainment.svg' width='80' height='80'></Image>}
+                                {transactionDetails.type === 'others' && <Image className="p-10 box-content" src='/icons/others.png' width='80' height='80'></Image>}
+                            </div>
                             <h2 className="prompt-box-title capitalize text-center my-3">{transactionDetails.type}</h2>
                             
                             <ul className="details-properties">

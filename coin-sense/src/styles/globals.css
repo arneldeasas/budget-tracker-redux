@@ -113,6 +113,10 @@ a {
     color-scheme: dark;
   }
 }
+.layout{
+  @apply relative flex flex-col justify-center w-full  h-[100vh] p-5 bg-white ;
+  background: linear-gradient(165deg, rgb(255, 251, 241), rgb(195, 255, 253));
+}
 .dashboard{
   @apply relative w-full h-[100%] mt-5 p-3  rounded-[40px] border-[#02bfc9] border-[4px];
 }
@@ -140,7 +144,10 @@ a {
   box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.19);
 -webkit-box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.19);
 -moz-box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.19);
+
+
 }
+
 .monthly-stat .capsule{
   @apply bg-green-300 inline px-[8px] py-[2px] text-white font-extralight text-[12px] text-center rounded-full;
   box-shadow: 3px 3px 2px 0px rgba(0,0,0,0.3) inset;
@@ -376,10 +383,11 @@ input:valid + i+div{
   @apply hidden !important;
 }
 .account-panel{
-  @apply bg-white fixed top-0 right-[-400px] max-w-[400px] z-[11] w-[70%] h-full transition-transform duration-300;
+  @apply bg-white  rounded-l-[30px] fixed top-0 right-[-400px] max-w-[400px] z-[11] w-[70%] h-full transition-transform duration-300;
   box-shadow: -4px 0px 6px 0px rgba(0,0,0,0.3);
   -webkit-box-shadow: -4px 0px 6px 0px rgba(0,0,0,0.3);
   -moz-box-shadow: -4px 0px 6px 0px rgba(0,0,0,0.3);
+
 }
 
 .account-panel-slide{
@@ -474,7 +482,7 @@ input:valid + i+div{
 
 
 .profile-logo{
-  @apply mx-auto my-2 w-[10rem] h-[10rem] flex justify-center items-center rounded-full bg-slate-200
+  @apply mx-auto my-2 mt-[100px] w-[8.5rem] h-[8.5rem] flex justify-center items-center rounded-full bg-slate-200
 }
 .profile-name{
   @apply text-[#0081a7] w-[80%] mx-auto font-light text-xl text-center rounded-full shadow-inner p-2;

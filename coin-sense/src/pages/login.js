@@ -12,6 +12,8 @@ const Login = () => {
     const router = useRouter();
     const dispatch = useDispatch();
 
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
+    const [passwordMatch, setPasswordMatch] = useState(null);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -33,39 +35,44 @@ const Login = () => {
 
     const handleLogin = async (event) =>{
         event.preventDefault();
+        setIsLoggingIn(true);
+        setTimeout(async() => {
+            const users = await dataLoader('http://localhost:8000/users');
 
-        const users = await dataLoader('http://localhost:8000/users');
+            const user = users.filter(user=>user.username === username)
+            const id = user[0].id
+            console.log(id)
 
-        const user = users.filter(user=>user.username === username)
-        const id = user[0].id
-        console.log(id)
-
-        if(user.length > 0){
-            console.log(user)
-            console.log(password)
-            console.log(user.password)
-            if(user[0].password === password){
-                dispatch(SetUserData(user[0]))
-                localStorage.setItem('id',user[0].id)
-                localStorage.setItem('SelectedMonth',format(date,'MMMM'))
-                console.log(password);
-                const userDetails = {
-                    id:user[0].id,
-                    username,
-                    firstname:user[0].firstname,
-                    lastname:user[0].lastname,
-                    calendar:user[0].calendar
+            if(user.length > 0){
+                console.log(user)
+                console.log(password)
+                console.log(user.password)
+                if(user[0].password === password){
+                    dispatch(SetUserData(user[0]))
+                    localStorage.setItem('id',user[0].id)
+                    localStorage.setItem('SelectedMonth',format(date,'MMMM'))
+                    console.log(password);
+                    const userDetails = {
+                        id:user[0].id,
+                        username,
+                        firstname:user[0].firstname,
+                        lastname:user[0].lastname,
+                        calendar:user[0].calendar
+                    }
+                    console.log(userDetails)
+                    dispatch(GetCurrentMonth());
+                    dispatch(GetUsername(userDetails));
+                    setIsLoggingIn(false);
+                    setPasswordMatch(true);
+                    router.push(`/dashboard/${format(date, 'MMMM')}`)
+                }else{
+                    setPasswordMatch(false);
+                    setIsLoggingIn(false);
                 }
-                console.log(userDetails)
-                dispatch(GetCurrentMonth());
-                dispatch(GetUsername(userDetails));
-                
-                router.push(`/dashboard/${format(date, 'MMMM')}`)
-                
-                
-            }
             
-        }
+            }
+        }, 500);
+        
         
     }
 
@@ -86,10 +93,13 @@ const Login = () => {
                         <input required
                             onChange={(e)=>(setPassword(e.target.value))}
                             className="login-inputs" type="password" name="password" id="password" />
+                        {passwordMatch === false && <h2 className="mt-3 font-bold italic text-center text-[#f67659]">incorrect password</h2>}
                     </div>
                     
+                    
                     <div>
-                        <button className="login-button login ">Login</button>
+                        {!isLoggingIn && <button className="login-button login ">Login</button>}
+                        {isLoggingIn && <button disabled className="login-button login ">Logging in...</button>}
                         <button onClick={goToSignup} className="login-button signup ">signup</button>
                     </div>
                     <p className="text-[#0081a7] text-[14px] font-light text-center"> Created by Alex and friends. &copy; 2023</p>

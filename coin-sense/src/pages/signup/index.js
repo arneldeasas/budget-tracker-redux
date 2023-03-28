@@ -145,6 +145,7 @@ const Signup = () => {
         let users = await dataLoader('http://localhost:8000/users');
         if(users.map(user=>user.username ).includes(username)){
             setIsUsernameTaken(true);
+            setIsSigningUp(false);
         }else{
 
             setTimeout(() => {

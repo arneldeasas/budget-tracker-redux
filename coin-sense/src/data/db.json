@@ -119,6 +119,88 @@
         }
       ],
       "id": 2
+    },
+    {
+      "username": "peng123",
+      "password": "Peng123123",
+      "firstname": "peng",
+      "lastname": "de asas",
+      "calendar": [
+        {
+          "month": "March",
+          "opened": true,
+          "budget": "6000",
+          "goal": "300",
+          "expenses": [
+            {
+              "id": 1,
+              "day": "28",
+              "price": "20",
+              "type": "food",
+              "description": "bumili ako ng kwekkwek",
+              "timeinseconds": "1679991078",
+              "time": "4:11 PM",
+              "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "id": 3,
+              "day": "28",
+              "price": "35",
+              "type": "school",
+              "description": "may ambagan",
+              "timeinseconds": "1680004302",
+              "time": "7:51 PM",
+              "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "id": 4,
+              "day": "28",
+              "price": "25",
+              "type": "entertainment",
+              "description": "comp-shop",
+              "timeinseconds": "1680007511",
+              "time": "8:45 PM",
+              "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "id": 5,
+              "day": "28",
+              "price": "45",
+              "type": "entertainment",
+              "description": "3 hrs comshop",
+              "timeinseconds": "1680012249",
+              "time": "10:04 PM",
+              "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "id": 6,
+              "day": "28",
+              "price": "25",
+              "type": "health",
+              "description": "bumili ako biogesic dahil sumakit ulo ko sa sjf w/prio at w/o prio",
+              "timeinseconds": "1680012286",
+              "time": "10:04 PM",
+              "date": "Tue, Mar 28, 2023"
+            }
+          ]
+        },
+        {
+          "month": "January",
+          "opened": true,
+          "budget": 0,
+          "goal": 0,
+          "expenses": []
+        }
+      ],
+      "id": 3
+    },
+    {
+      "username": "tanjirokamado",
+      "password": "Kamado11",
+      "firstname": "Tanjiro",
+      "lastname": "Kamado",
+      "calendar": [],
+      "id": 4
     }
   ]
 }
