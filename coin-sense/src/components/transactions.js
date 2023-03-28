@@ -12,23 +12,28 @@ const Transactions = () => {
       
       setMonthObj(user.calendar.filter(calendar=> calendar.month === selectedMonth)) 
       const monthObj = user.calendar.filter(calendar=> calendar.month === selectedMonth)
-      setTodayExpenses(monthObj[0].expenses.filter(expense => expense.day === format(today,'d'))) 
+      setTodayExpenses(monthObj[0]?.expenses.filter(expense => expense.day === format(today,'d'))) 
       
     },[user])
 
     return ( 
         <div className="flex flex-col gap-2 " >
             {
-                todayExpenses.sort((a, b) => parseInt(b.timeinseconds) - parseInt(a.timeinseconds)).map(expense=>
+                todayExpenses?.sort((a, b) => parseInt(b.timeinseconds) - parseInt(a.timeinseconds)).map(expense=>
                     (
          
                         <div key={expense.id} className="transaction-item">
                             <div className="bg-[#aad8db] rounded-lg w-[40px] h-[40px] p-2">
-                                <Image src='/icons/food-icon.png' alt='food-icon' width={35} height={35}/>
+                                {expense.type === 'food' &&<Image src='/icons/food-icon.png' alt='food-icon' width={25} height={25}/>}
+                                {expense.type === 'school' && <Image src='/icons/school.png' alt='food-icon' width={25} height={25}/>}
+                                {expense.type === 'entertainment' && <Image src='/icons/entertainment.svg' alt='food-icon' width={25} height={25}/>}
+                                {expense.type === 'health' && <Image src='/icons/health.png' alt='food-icon' width={25} height={25}/>}
+                                {expense.type === 'transport' && <Image src='/icons/transport.png' alt='food-icon' width={25} height={25}/>}
+                                {expense.type === 'others' && <Image src='/icons/others.png' alt='food-icon' width={25} height={25}/>}
                             </div>
-                            <div>
+                            <div className="overflow-hidden mx-2 w-[60%]">
                                 <h2 className="text-[14px] font-semibold">{expense.type}</h2>
-                                <h3 className="text-[12px] ">description...</h3>
+                                <h3 className="text-[12px] overflow-ellipsis whitespace-nowrap overflow-hidden ">{expense.description} </h3>
                             </div>
                             <div>
                                 <h2 className="text-[14px] font-semibold text-[#f67659] text-right">-₱{expense.price}</h2>

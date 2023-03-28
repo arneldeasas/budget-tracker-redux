@@ -62,7 +62,7 @@ const DashboardContent = (props) => {
             console.log('Calendar is empty');
         } */
 
-    },[UserData,selectedMonth,expenses])
+    },[UserData,selectedMonth])
     
 
     return ( 

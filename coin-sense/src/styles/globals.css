@@ -176,13 +176,19 @@ a {
   @apply font-semibold text-[#0081a7] text-center
 }
 .transaction-item{
-  @apply bg-white p-2 rounded-2xl text-[#0081a7] flex items-center gap-2 justify-between;
+  @apply bg-white p-2 rounded-2xl text-[#0081a7] flex items-center justify-between;
   box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.17);
   -webkit-box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.17);
   -moz-box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.17); 
 }
+.transaction-item > div:nth-child(1){
+  @apply w-fit h-fit  
+}
 .transaction-item > div:nth-child(2){
-  @apply grow
+  @apply grow  justify-self-start
+}
+.transaction-item > div:nth-child(3){
+  @apply w-fit h-fit 
 }
 .calendar-dropdown-container{
   @apply absolute z-10 top-[-25px] left-[50%] translate-x-[-50%] w-[180px] ;
@@ -419,7 +425,11 @@ input:valid + i+div{
   @apply flex flex-wrap gap-2
 }
 .expense-type-container > div{
-  @apply p-3 leading-3 bg-gray-200/80 text-[#02bfc9] font-light text-center rounded-md min-w-[30%] grow duration-200 cursor-pointer
+  @apply p-3 leading-3 bg-gray-200/80 text-[#02bfc9] font-light text-center rounded-md min-w-[30%] grow duration-200 cursor-pointer ;
+  
+}
+.type{
+  @apply transition !important;
 }
 .expense-type-container > div:hover{
   @apply scale-90

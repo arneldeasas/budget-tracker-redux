@@ -1,153 +1,33 @@
 {
   "users": [
     {
-      "username": "pengdeasas26",
-      "password": "Pengdeasas26",
-      "firstname": "Peng",
+      "username": "deasasarnel26",
+      "password": "Deasasarnel26",
+      "firstname": "Arnel Jr",
       "lastname": "De Asas",
-      "id": 1,
       "calendar": [
         {
           "month": "March",
           "opened": true,
-          "budget": "5000",
-          "goal": "700",
-          "expenses": []
-        }
-      ]
-    },
-    {
-      "username": "arnel26",
-      "password": "Arnel266",
-      "firstname": "Kazuma",
-      "lastname": "De Asas",
-      "calendar": [],
-      "id": 2
-    },
-    {
-      "username": "janella31",
-      "password": "Janella31",
-      "firstname": "Janella",
-      "lastname": "De Asas",
-      "calendar": [],
-      "id": 3
-    },
-    {
-      "username": "alex222",
-      "password": "Alex2222",
-      "firstname": "Alex",
-      "lastname": "Marasigan",
-      "calendar": [
-        {
-          "month": "March",
-          "opened": true,
-          "budget": 0,
-          "goal": 0,
-          "expenses": []
-        }
-      ],
-      "id": 4
-    },
-    {
-      "username": "shet123",
-      "password": "Shet123123",
-      "firstname": "shet",
-      "lastname": "shet",
-      "calendar": [
-        {
-          "month": "March",
-          "opened": true,
-          "budget": "6000",
-          "goal": "50",
+          "budget": "30000",
+          "goal": "256",
           "expenses": [
             {
-              "day": "27",
-              "price": "30",
+              "day": "28",
+              "price": "5",
               "type": "food",
-              "description": "aw",
-              "timeinseconds": "1679926960",
-              "time": "10:22 PM",
-              "date": "Mon, Mar 27, 2023"
-            },
-            {
-              "day": "27",
-              "price": "36",
-              "type": "transport",
-              "description": "mahal ng lrt",
-              "timeinseconds": "1679928403",
-              "time": "10:46 PM",
-              "date": "Mon, Mar 27, 2023"
-            },
-            {
-              "day": "28",
-              "price": "35",
-              "type": "school",
-              "description": "",
-              "timeinseconds": "1679967492",
-              "time": "9:38 AM",
+              "description": "eklog",
+              "timeinseconds": "1679980043",
+              "time": "1:07 PM",
               "date": "Tue, Mar 28, 2023"
             },
             {
               "day": "28",
-              "price": "70",
-              "type": "health",
-              "description": "",
-              "timeinseconds": "1679967504",
-              "time": "9:38 AM",
-              "date": "Tue, Mar 28, 2023"
-            },
-            {
-              "day": "28",
-              "price": "20",
+              "price": "15",
               "type": "food",
-              "description": "",
-              "timeinseconds": "1679967518",
-              "time": "9:38 AM",
-              "date": "Tue, Mar 28, 2023"
-            },
-            {
-              "day": "28",
-              "price": "21",
-              "type": "transport",
-              "description": "",
-              "timeinseconds": "1679967555",
-              "time": "9:39 AM",
-              "date": "Tue, Mar 28, 2023"
-            },
-            {
-              "day": "28",
-              "price": "20",
-              "type": "others",
-              "description": "",
-              "timeinseconds": "1679967684",
-              "time": "9:41 AM",
-              "date": "Tue, Mar 28, 2023"
-            },
-            {
-              "day": "28",
-              "price": "25",
-              "type": "food",
-              "description": "",
-              "timeinseconds": "1679974189",
-              "time": "11:29 AM",
-              "date": "Tue, Mar 28, 2023"
-            },
-            {
-              "day": "28",
-              "price": "50",
-              "type": "entertainment",
-              "description": "",
-              "timeinseconds": "1679974203",
-              "time": "11:30 AM",
-              "date": "Tue, Mar 28, 2023"
-            },
-            {
-              "day": "28",
-              "price": "21",
-              "type": "health",
-              "description": "",
-              "timeinseconds": "1679974223",
-              "time": "11:30 AM",
+              "description": "bumili ako ng palamig",
+              "timeinseconds": "1679980821",
+              "time": "1:20 PM",
               "date": "Tue, Mar 28, 2023"
             }
           ]
@@ -155,12 +35,26 @@
         {
           "month": "January",
           "opened": true,
-          "budget": "2500",
+          "budget": 0,
+          "goal": 0,
+          "expenses": []
+        },
+        {
+          "month": "February",
+          "opened": true,
+          "budget": 0,
+          "goal": 0,
+          "expenses": []
+        },
+        {
+          "month": "April",
+          "opened": true,
+          "budget": "2000",
           "goal": 0,
           "expenses": []
         }
       ],
-      "id": 5
+      "id": 1
     }
   ]
 }

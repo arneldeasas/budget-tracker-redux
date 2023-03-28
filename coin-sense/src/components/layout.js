@@ -57,6 +57,7 @@ const Layout = () => {
 
     const [openAddExpense, setOpenAddExpense] = useState(false);
     const [closedAddExpense, setClosedAddExpense] = useState(true);
+    const [expenseTypeMissing, setExpenseTypeMissing] = useState(false);
 
     const [openTransactionDetails, setOpenTransactionDetails] = useState(false);
     const [closedTransactionDetails, setClosedTransactionDetails] = useState(true);
@@ -98,7 +99,7 @@ useEffect( ()=>{
         
     })
     
-},[month, budget, save])
+},[month, showStart, closedAddExpense, closedBudget,closedSavings])
    
     const chooseExpenseType = (e)=> {
         
@@ -107,10 +108,16 @@ useEffect( ()=>{
         }
 
         if(e.target.closest(`.type`)){
-            setExpenseType(e.target.id)
+            setExpenseType(e.target.id);
+            setExpenseTypeMissing(false);
             const expenseType = e.target.id;
             setActiveButton(e.target?.closest(`#${expenseType}`));
             e.target.closest(`#${expenseType}`).classList.add('selected-item');
+            console.log('dssadadaaaa')
+        }else{
+            console.log('dsaaaa')
+            setExpenseType('');
+            activeButton.classList.remove('selected-item')
         }
         
     }
@@ -184,25 +191,33 @@ useEffect( ()=>{
         clearForm();
         setOpenSavings(false);
     }
-   console.log()
-    const confirmExpense = ()=>{
-        const tempUserData = clone(UserData);
-        const expenseProperties = {
-            day: format(today,'d'),
-            price: expenseAmount,
-            type: expenseType,
-            description: transactionDescription,
-            timeinseconds: format(today, 't'),
-            time: format(today,'p'),
-            date: format(today, 'E, MMM d, yyyy'),
-            //newbalance: 
+   
+    const confirmExpense = (event)=>{
+        event.preventDefault();
+
+        if(expenseType.length > 0){
+            setExpenseTypeMissing(false);
+            const tempUserData = clone(UserData);
+            const expenseProperties = {
+                day: format(today,'d'),
+                price: expenseAmount,
+                type: expenseType,
+                description: transactionDescription,
+                timeinseconds: format(today, 't'),
+                time: format(today,'p'),
+                date: format(today, 'E, MMM d, yyyy'),
+                //newbalance: 
+            }
+            const index = tempUserData.calendar.findIndex(calendar=>calendar.month===month)
+            tempUserData.calendar[index].expenses.push(expenseProperties)
+            dataUploader(`http://localhost:8000/users/${id}`,'PATCH',tempUserData);
+            clearForm();
+            activeButton.classList.remove('selected-item')
+            setOpenAddExpense(false);
+        }else{
+            setExpenseTypeMissing(true);
         }
-        const index = tempUserData.calendar.findIndex(calendar=>calendar.month===month)
-        tempUserData.calendar[index].expenses.push(expenseProperties)
-        dataUploader(`http://localhost:8000/users/${id}`,'PATCH',tempUserData);
-        clearForm();
         
-        setOpenAddExpense(false);
     }
 
 //animation related functions***************************************************
@@ -332,7 +347,15 @@ useEffect( ()=>{
                 >
                     <form onSubmit={confirmExpense}>
 
-                        <div onClick={()=>{setOpenAddExpense(false);clearForm();}} className="x-button">
+                        <div 
+                            onClick={()=>{
+                                setOpenAddExpense(false);
+                                clearForm();
+                                setExpenseType('');
+                                activeButton.classList.remove('selected-item')}
+                            } 
+                            className="x-button"
+                        >
                             <i className="fa-regular fa-circle-xmark text-3xl text-white"></i>
                         </div>
 
@@ -341,6 +364,7 @@ useEffect( ()=>{
                         <div className="flex items-center border-b-[1px] border-[#02bfc9] my-3">
                             <span className="block text-2xl font-light text-[#0081a7]">₱</span>
                             <input 
+                                required
                                 onChange={(e)=>{setExpenseAmount(e.target.value)}} 
                                 placeholder="Enter amount" value={expenseAmount} 
                                 type="number" name="expenseAmount" id="expenseAmount" className="amount-input"
@@ -349,7 +373,9 @@ useEffect( ()=>{
 
                         <h2 className="text-[#0081a7] font-light my-8">for</h2>
 
-                        <div onClick={chooseExpenseType} className="expense-type-container">
+                        <div onClick={chooseExpenseType} 
+                            className={`expense-type-container duration-200  ${expenseTypeMissing ? 'border-2 animate-pulse border-[#f67659] p-2 rounded-lg' :'' }`}
+                        >
                             <div className="type" id="food">Food</div>
                             <div className="type" id="transport">Transport</div>
                             <div className="type" id="school">School</div>

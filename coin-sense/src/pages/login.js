@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { dataLoader } from "./signup";
 
 import { GetCurrentMonth, GetUsername } from "@/redux/global";
-
+import { SetUserData } from "@/redux/global";
 const Login = () => {
     const router = useRouter();
     const dispatch = useDispatch();
@@ -17,6 +17,15 @@ const Login = () => {
 
    const date = new Date();
 
+    /* useEffect(()=>{
+        fetch(`http://localhost:8000/users`)
+        .then(res => res.json())
+        .then(data=>{
+            
+            dispatch(SetUserData(data))
+            
+        })
+    },[]) */
     const goToSignup = event =>{
         event.preventDefault();
         router.push('/signup')
@@ -28,12 +37,15 @@ const Login = () => {
         const users = await dataLoader('http://localhost:8000/users');
 
         const user = users.filter(user=>user.username === username)
-        
+        const id = user[0].id
+        console.log(id)
+
         if(user.length > 0){
             console.log(user)
             console.log(password)
             console.log(user.password)
             if(user[0].password === password){
+                dispatch(SetUserData(user[0]))
                 localStorage.setItem('id',user[0].id)
                 localStorage.setItem('SelectedMonth',format(date,'MMMM'))
                 console.log(password);
