@@ -10,6 +10,7 @@ import Image from "next/image";
 const DashboardContent = (props) => {
     const {handleOpenBudget, handleOpenSavings, handleOpenAddExpense} = props;
     const {user:UserData, selectedMonth} = useSelector(state=>state.global)
+    const {stat} = useSelector(state=>state.transaction);
     const dispatch = useDispatch();
     const months = [
         'January',
@@ -26,73 +27,43 @@ const DashboardContent = (props) => {
         'December',
       ];
     const [showExpenseList, setShowExpenseList] = useState(false);
-    let monthObj, budget=0, goal=0, expenses=0, balance=0, dailylimit=0, spentToday=0, safeToSpend=0;
+    let monthObj;
+    const [budget, setBudget] = useState(0);
+    const [goal, setGoal] = useState(0);
+    const [balance, setBalance] = useState(0);
+    const [expenses, setExpenses] = useState(0);
+    const [dailylimit, setDailylimit] = useState(0);
+    const [spentToday, setSpentToday] = useState(0);
+    const [safeToSpend, setSafeToSpend] = useState(0);
 
     const monthIndex = months.indexOf(selectedMonth)
     const date = new Date();
     const month = new Date(format(date,'yyyy'),monthIndex);
     const numberOfDays = getDaysInMonth(month);
-    console.log(numberOfDays)
+    console.log(stat.expenses)
     
     useEffect(()=>{
-        if (UserData.calendar && UserData.calendar.length > 0) {
+
+        const ShowExpenseList= async()=>{
+           await stat.expenses > 0 ? setShowExpenseList(true) : setShowExpenseList(false);
+           console.log(stat.expenses)
+        }
+        ShowExpenseList();
+
+        /* if (UserData.calendar && UserData.calendar.length > 0) {
             console.log('lvl1')
             monthObj = UserData.calendar.filter(calendar=>calendar.month===selectedMonth)
             if(monthObj.length>0 && monthObj[0].expenses.length>0){
-                setShowExpenseList(true);
+                
                 console.log('lvl2')
             }
            
         } else {
             console.log('Calendar is empty');
-        }
-        const stat = {
-            budget,
-            balance,
-            goal,
-            expenses
-        }
-        dispatch(SetStat(stat));
-    },[balance])
+        } */
+
+    },[UserData,selectedMonth,expenses])
     
-    
-    if (UserData.calendar && UserData.calendar.length > 0) {
-        
-        monthObj = UserData.calendar.filter(calendar=>calendar.month===selectedMonth)
-        
-       
-
-        console.log(monthObj)
-        budget = monthObj[0]?.budget ? monthObj[0].budget : 0;
-        
-        goal = monthObj[0]?.goal ? monthObj[0].goal : 0;
-
-        dailylimit = Math.floor((budget-goal) / numberOfDays) ;
-        if(monthObj.length>0 && monthObj[0].expenses.length>0){
-            
-            expenses = monthObj[0].expenses
-            .map(expense=>expense.price)
-            .reduce((accumulator, currentItem)=>parseInt(accumulator) + parseInt(currentItem),0);
-
-            balance = budget-expenses;
-
-            spentToday = monthObj[0].expenses
-                .filter(expense=>expense.day === format(date,'d'))
-                .map(expense=>expense.price)
-                .reduce((accumulator, currentItem)=>parseInt(accumulator) + parseInt(currentItem),0);
-            safeToSpend = dailylimit - spentToday;
-        }else{
-            
-        }
-        
-        
-        
-    } else {
-        console.log('Calendar is empty');
-    }
-    /* console.log(UserData.calendar.filter(calendar=>calendar.month === selectedMonth)) */
-    /* const monthObj = UserData.calendar.filter(calendar=>calendar.month === selectedMonth) */
-    /* const balance = parseInt(monthObj[0].budget); */
 
     return ( 
         <div className="dashboard-content relative z-0">
@@ -101,7 +72,7 @@ const DashboardContent = (props) => {
                 <div>
                     <div className="capsule capsule-balance">Balance</div>
                     <div className="">
-                        <h2>₱{balance}</h2>
+                        <h2>₱{stat.balance}</h2>
                     </div>
                     
                 </div>
@@ -110,20 +81,20 @@ const DashboardContent = (props) => {
                     <i onClick={handleOpenBudget} class="fa-solid fa-pen-to-square edit-icon "></i>
                     <div className="capsule capsule-budget">Budget</div>
                     <div>
-                        <h2>₱{budget}</h2>
+                        <h2>₱{stat.budget}</h2>
                     </div>
                 </div>
                 <div className="relative">
                     <i onClick={handleOpenSavings} class="fa-solid fa-pen-to-square edit-icon "></i>
                     <div className="capsule capsule-savings">Target Savings</div>
                     <div>
-                        <h2>{goal}</h2>
+                        <h2>{stat.goal}</h2>
                     </div>
                 </div>
                 <div>
                     <div className="capsule capsule-expenses">Expenses</div>
                     <div>
-                        <h2>{expenses}</h2>
+                        <h2>{stat.expenses}</h2>
                     </div>
                 </div>
             </div>
@@ -132,15 +103,15 @@ const DashboardContent = (props) => {
                 <div className="daily-stat-box">
                     <div>
                         <h2 className="daily-stat-title">Limit</h2>
-                        <h2>{dailylimit}</h2>
+                        <h2>{stat.dailylimit}</h2>
                     </div>
                     <div>
                         <h2 className="daily-stat-title">Safe to Spend</h2>
-                        <h2>{safeToSpend}</h2>
+                        <h2>{stat.safetospend}</h2>
                     </div>
                     <div>
                         <h2 className="daily-stat-title">Spent today</h2>
-                        <h2>{spentToday}</h2>
+                        <h2>{stat.spentToday}</h2>
                     </div>
                 </div>
             </div>

@@ -57,8 +57,8 @@
         {
           "month": "March",
           "opened": true,
-          "budget": "5000",
-          "goal": "500",
+          "budget": "6000",
+          "goal": "50",
           "expenses": [
             {
               "day": "27",
@@ -77,13 +77,85 @@
               "timeinseconds": "1679928403",
               "time": "10:46 PM",
               "date": "Mon, Mar 27, 2023"
+            },
+            {
+              "day": "28",
+              "price": "35",
+              "type": "school",
+              "description": "",
+              "timeinseconds": "1679967492",
+              "time": "9:38 AM",
+              "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "day": "28",
+              "price": "70",
+              "type": "health",
+              "description": "",
+              "timeinseconds": "1679967504",
+              "time": "9:38 AM",
+              "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "day": "28",
+              "price": "20",
+              "type": "food",
+              "description": "",
+              "timeinseconds": "1679967518",
+              "time": "9:38 AM",
+              "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "day": "28",
+              "price": "21",
+              "type": "transport",
+              "description": "",
+              "timeinseconds": "1679967555",
+              "time": "9:39 AM",
+              "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "day": "28",
+              "price": "20",
+              "type": "others",
+              "description": "",
+              "timeinseconds": "1679967684",
+              "time": "9:41 AM",
+              "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "day": "28",
+              "price": "25",
+              "type": "food",
+              "description": "",
+              "timeinseconds": "1679974189",
+              "time": "11:29 AM",
+              "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "day": "28",
+              "price": "50",
+              "type": "entertainment",
+              "description": "",
+              "timeinseconds": "1679974203",
+              "time": "11:30 AM",
+              "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "day": "28",
+              "price": "21",
+              "type": "health",
+              "description": "",
+              "timeinseconds": "1679974223",
+              "time": "11:30 AM",
+              "date": "Tue, Mar 28, 2023"
             }
           ]
         },
         {
           "month": "January",
           "opened": true,
-          "budget": 0,
+          "budget": "2500",
           "goal": 0,
           "expenses": []
         }

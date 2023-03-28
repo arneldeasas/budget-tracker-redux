@@ -8,7 +8,7 @@ import Image from "next/image";
 import { dataUploader, dataLoader } from "@/pages/signup";
 import { useDispatch, useSelector } from "react-redux";
 import { SetUserData, GetCurrentMonth, GetSelectedMonth } from "@/redux/global";
-
+import {  SetStat } from "@/redux/transaction";
 
 /* export async function getServerSideProps(context) {
     
@@ -32,7 +32,6 @@ const Layout = () => {
     const today = new Date();
     
     const dispatch = useDispatch();
-    const [rerender, setRerender] = useState(false);
 
     const [expenseAmount, setExpenseAmount] = useState('');
     const [descLength, setDescLength] = useState(0);
@@ -68,7 +67,6 @@ const Layout = () => {
     const router = useRouter();
     //let {months} = router.query
     const {user:UserData} = useSelector(state=>state.global);
-    const {stat} = useSelector(state=>state.transaction);
     const [month, setMonth] = useState('')
     
     const [id, setId] = useState('');
@@ -84,6 +82,7 @@ useEffect( ()=>{
     .then(data=>{
         setId(data.id)
         dispatch(SetUserData(data))
+        
         console.log(data)
 
         let mm = localStorage.getItem('SelectedMonth')
@@ -92,6 +91,11 @@ useEffect( ()=>{
         const monthObj = data.calendar.filter(calendar=>calendar.month === mm).map(calendar=> calendar.opened)
         setShowStart(!monthObj[0])
         console.log(monthObj,month)
+
+        const selectedMonthObj = data.calendar.filter(calendar=>calendar.month === mm)
+        
+        dispatch(SetStat(selectedMonthObj[0]));
+        
     })
     
 },[month, budget, save])
@@ -163,7 +167,9 @@ useEffect( ()=>{
         const tempUserData = clone(UserData);
         const index = tempUserData.calendar.findIndex(calendar=>calendar.month===month)
         tempUserData.calendar[index].budget = budget ;
-        dataUploader(`http://localhost:8000/users/${id}`,'PATCH',tempUserData);
+
+        dataUploader(`http://localhost:8000/users/${id}`,'PATCH',tempUserData)
+        
         clearForm();
         setOpenBudget(false);
     }
@@ -172,7 +178,9 @@ useEffect( ()=>{
         const tempUserData = clone(UserData);
         const index = tempUserData.calendar.findIndex(calendar=>calendar.month===month)
         tempUserData.calendar[index].goal = save;
-        dataUploader(`http://localhost:8000/users/${id}`,'PATCH',tempUserData);
+        dataUploader(`http://localhost:8000/users/${id}`,'PATCH',tempUserData)
+        
+        console.log(save);
         clearForm();
         setOpenSavings(false);
     }
@@ -192,8 +200,8 @@ useEffect( ()=>{
         const index = tempUserData.calendar.findIndex(calendar=>calendar.month===month)
         tempUserData.calendar[index].expenses.push(expenseProperties)
         dataUploader(`http://localhost:8000/users/${id}`,'PATCH',tempUserData);
-        setExpenseAmount('');
-        setTransactionDescription('');
+        clearForm();
+        
         setOpenAddExpense(false);
     }
 
