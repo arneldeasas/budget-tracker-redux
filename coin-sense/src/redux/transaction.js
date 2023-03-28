@@ -34,7 +34,16 @@ export const transaction = createSlice({
         dailylimit: 0,
         safetospend: 0,
         spenttoday: 0,
-    }
+    },
+    transactionDetails:{
+        id:'',
+        type: '',
+        price:'',
+        time:'',
+        date:'',
+        description:'',
+    },
+    transactionItem: {}
   },
   reducers: {
 
@@ -74,12 +83,22 @@ export const transaction = createSlice({
           state.stat.dailylimit = Math.floor((monthObj.budget - monthObj.goal) / numberOfDays);
           state.stat.safetospend = state.stat.dailylimit - state.stat.spentToday
         }  
+    },
+    SetTransactionDetails: (state,action)=>{
+      const details = action.payload
+      state.transactionItem = details;
+      state.transactionDetails.id = details.id
+      state.transactionDetails.type = details.type;
+      state.transactionDetails.price = details.price;
+      state.transactionDetails.time = details.time;
+      state.transactionDetails.date = details.date;
+      state.transactionDetails.description = details.description;
     }
   }
  }
 )
 
 // Action creators are generated for each case reducer function
-export const { SetStat } = transaction.actions
+export const { SetStat, SetTransactionDetails} = transaction.actions
 
 export default transaction.reducer

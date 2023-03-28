@@ -85,6 +85,15 @@
   margin: 0;
 }
 
+::-webkit-scrollbar-track {
+  background: transparent; /* Set the background color of the track */
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-500/20 /* Set the color of the thumb */
+}
+::-webkit-scrollbar {
+  width: 3px; /* Set the width of the scrollbar */
+}
 html,
 
 body {
@@ -405,7 +414,7 @@ input:valid + i+div{
   -moz-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.3);
 }
 .prompt-box-title{
-  @apply mt-[100px] font-light text-3xl text-[#0081a7]
+  @apply mt-[100px] font-light text-2xl text-[#0081a7]
 }
 .confirm-button{
   @apply py-2 px-4 w-full mx-auto rounded-full bg-[#02bfc9] text-white font-light block  mt-10 mb-5
@@ -453,7 +462,7 @@ input:valid + i+div{
   @apply font-light
 }
 .details-properties li {
-  @apply my-2 font-semibold
+  @apply  font-semibold text-[14px]
 }
 
 .delete-prompt-options{

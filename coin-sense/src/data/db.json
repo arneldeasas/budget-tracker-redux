@@ -29,6 +29,33 @@
               "timeinseconds": "1679980821",
               "time": "1:20 PM",
               "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "day": "28",
+              "price": "23",
+              "type": "food",
+              "description": "",
+              "timeinseconds": "1679981088",
+              "time": "1:24 PM",
+              "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "day": "28",
+              "price": "12",
+              "type": "transport",
+              "description": "",
+              "timeinseconds": "1679981193",
+              "time": "1:26 PM",
+              "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "day": "28",
+              "price": "25",
+              "type": "others",
+              "description": "nagdonate ako ng pera",
+              "timeinseconds": "1679981214",
+              "time": "1:26 PM",
+              "date": "Tue, Mar 28, 2023"
             }
           ]
         },
@@ -55,6 +82,43 @@
         }
       ],
       "id": 1
+    },
+    {
+      "username": "janella31",
+      "password": "Janella31",
+      "firstname": "Janella",
+      "lastname": "Maasim",
+      "calendar": [
+        {
+          "month": "March",
+          "opened": true,
+          "budget": "9000",
+          "goal": "700",
+          "expenses": [
+            {
+              "id": 1,
+              "day": "28",
+              "price": "60",
+              "type": "food",
+              "description": "bumili ako ng burger sa angels burger malapit sa maysan kaso ang tagal ng service masarap sana.\n",
+              "timeinseconds": "1679990413",
+              "time": "4:00 PM",
+              "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "id": 2,
+              "day": "28",
+              "price": "20",
+              "type": "health",
+              "description": "bumili ako ng dalawang biogesic ",
+              "timeinseconds": "1679990557",
+              "time": "4:02 PM",
+              "date": "Tue, Mar 28, 2023"
+            }
+          ]
+        }
+      ],
+      "id": 2
     }
   ]
 }

@@ -8,7 +8,7 @@ import Image from "next/image";
 import { dataUploader, dataLoader } from "@/pages/signup";
 import { useDispatch, useSelector } from "react-redux";
 import { SetUserData, GetCurrentMonth, GetSelectedMonth } from "@/redux/global";
-import {  SetStat } from "@/redux/transaction";
+import {  SetStat, SetTransactionDetails } from "@/redux/transaction";
 
 /* export async function getServerSideProps(context) {
     
@@ -68,6 +68,7 @@ const Layout = () => {
     const router = useRouter();
     //let {months} = router.query
     const {user:UserData} = useSelector(state=>state.global);
+    const {transactionItem, transactionDetails} = useSelector(state=> state.transaction)
     const [month, setMonth] = useState('')
     
     const [id, setId] = useState('');
@@ -99,7 +100,7 @@ useEffect( ()=>{
         
     })
     
-},[month, showStart, closedAddExpense, closedBudget,closedSavings])
+},[month, showStart, closedAddExpense, closedBudget,closedSavings,closedTransactionDetails])
    
     const chooseExpenseType = (e)=> {
         
@@ -133,6 +134,7 @@ useEffect( ()=>{
         setDescLength(0);
         setTransactionDescription('');
         setExpenseAmount('');
+        setExpenseType('');
         setBudget('');
         setSave('');
     }
@@ -198,7 +200,16 @@ useEffect( ()=>{
         if(expenseType.length > 0){
             setExpenseTypeMissing(false);
             const tempUserData = clone(UserData);
+            const index = tempUserData.calendar.findIndex(calendar=>calendar.month===month)
+            let lastId = 0;
+            if(tempUserData.calendar.filter(calendar=> calendar.month ===month)[0].expenses.length > 0){
+                const arrLength = tempUserData.calendar.filter(calendar=> calendar.month ===month)[0].expenses.length
+                lastId = tempUserData.calendar.filter(calendar=> calendar.month ===month)[0].expenses[arrLength-1].id
+            }
+            
+
             const expenseProperties = {
+                id: lastId + 1,
                 day: format(today,'d'),
                 price: expenseAmount,
                 type: expenseType,
@@ -208,7 +219,7 @@ useEffect( ()=>{
                 date: format(today, 'E, MMM d, yyyy'),
                 //newbalance: 
             }
-            const index = tempUserData.calendar.findIndex(calendar=>calendar.month===month)
+            
             tempUserData.calendar[index].expenses.push(expenseProperties)
             dataUploader(`http://localhost:8000/users/${id}`,'PATCH',tempUserData);
             clearForm();
@@ -220,6 +231,22 @@ useEffect( ()=>{
         
     }
 
+    const handleDeleteTransaction = (event) =>{
+        if(event.target.closest('#delete-transaction')){
+            
+            const indexOfItem = UserData.calendar.filter(calendar=>calendar.month === month)[0]
+                                        .expenses.findIndex(expense => expense.id == transactionDetails.id)
+    
+            const tempUserData = clone(UserData);
+
+            tempUserData.calendar.filter(calendar=>calendar.month===month)[0]
+                        .expenses.splice(indexOfItem,1)
+                        
+            dataUploader(`http://localhost:8000/users/${id}`,'PATCH',tempUserData);
+            
+            setOpenTransactionDetails(false);
+        }
+    }
 //animation related functions***************************************************
     const handleClickedDropDown=()=>{ 
         setOpenDropdown(true);
@@ -248,7 +275,20 @@ useEffect( ()=>{
         setOpenAddExpense(true);
     }
 
-    
+    const handleOpenTransactionDetails = (event)=>{
+        if(event.target.closest('.transaction-item')){
+            const id = event.target.closest('.transaction-item').id
+            const transactionItem = UserData.calendar.filter(calendar=>calendar.month === month)[0]
+                                            .expenses.filter(expense => expense.id == id)[0];
+            
+            dispatch(SetTransactionDetails(transactionItem))
+            setClosedTransactionDetails(false);
+            setOpenTransactionDetails(true);
+
+       }
+        
+        
+    }
 
 
     const handleCloseAnimation=(event)=>{
@@ -272,6 +312,10 @@ useEffect( ()=>{
 
         if(!openAddExpense && event.target.id === 'add-expense' ){
             setClosedAddExpense(true);
+        }
+
+        if(!openTransactionDetails && event.target.id === 'transaction-details' ){
+            setClosedTransactionDetails(true);
         }
     }
 
@@ -352,7 +396,8 @@ useEffect( ()=>{
                                 setOpenAddExpense(false);
                                 clearForm();
                                 setExpenseType('');
-                                activeButton.classList.remove('selected-item')}
+                                setExpenseTypeMissing(false);
+                                activeButton.classList?.remove('selected-item')}
                             } 
                             className="x-button"
                         >
@@ -399,10 +444,11 @@ useEffect( ()=>{
                 </div>
             </div>
 
+            {/* modal for viewing a transaction details */}
             <div className={`prompt-box-container ${closedTransactionDetails ? 'hidden':''} `}>
 
                 <div 
-                    id='add-expense' 
+                    id='transaction-details' 
                     onAnimationEnd={handleCloseAnimation} 
                     className={`prompt-box w-[60%] max-w-[300px] relative  ${openTransactionDetails ? 'pop-in-animation' : 'pop-out-animation'} `}
                 >
@@ -410,11 +456,11 @@ useEffect( ()=>{
                         <div>
                             <h2 className="text-xl font-light text-[#0081a7] text-center">Delete this transaction?</h2>
                             <ul className="delete-prompt-options flex cursor-default">
-                                <li 
-                                    className="text-[#02bfc9] duration-150 bg-transparent border-[1px] border-[#02bfc9] hover:text-white hover:bg-[#02bfc9]"
+                                <li onClick={handleDeleteTransaction} id='delete-transaction'
+                                    className="text-[#02bfc9] duration-150 bg-transparent border-[1px] border-[#02bfc9] active:text-white active:bg-[#02bfc9]"
                                 >YES</li>
                                 <li onClick={()=>{setShowDeletePrompt(false);setShowTransactionDetails(true);}} 
-                                    className="text-white bg-[#02bfc9] border-[1px] border-[#02bfc9] duration-150 hover:text-[#02bfc9] hover:bg-transparent"
+                                    className="text-white bg-[#02bfc9] border-[1px] border-[#02bfc9] duration-150 active:text-[#02bfc9] active:bg-transparent"
                                 >NO</li>
                             </ul>
                         </div>
@@ -426,14 +472,14 @@ useEffect( ()=>{
                                 <i class="fa-solid fa-trash-can text-gray-400 text-2xl"></i>
                             </div>
                             <div className="bg-[#aad8db] w-fit h-fit rounded-full mx-auto"><Image className="p-10 box-content" src='/icons/food-icon.png' width='100' height='100'></Image></div>
-                            <h2 className="prompt-box-title text-center my-3">Food</h2>
+                            <h2 className="prompt-box-title capitalize text-center my-3">{transactionDetails.type}</h2>
                             
                             <ul className="details-properties">
-                                <li>Price: <span>₱100</span></li>
-                                <li>Time: <span>11:00 am</span></li>
-                                <li>Date: <span>Fri, March 12, 2023</span></li>
+                                <li>Price: <span>₱{transactionDetails.price}</span></li>
+                                <li>Time: <span>{transactionDetails.time}</span></li>
+                                <li>Date: <span>{transactionDetails.date}</span></li>
                                 <li>Description:
-                                    <span className="block text-justify">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minima cum quos mollitia odio enim fuga error porro, saepe repudiandae dolores corrupti non sed earum, eum quidem nulla quis at ipsa!</span>
+                                    <span className="block text-justify">{transactionDetails.description}</span>
                                 </li>
                             </ul>
                             <div onClick={()=>{setOpenTransactionDetails(false)}} className="w-[80%] mx-auto">
@@ -492,6 +538,7 @@ useEffect( ()=>{
                         handleOpenBudget = {handleOpenBudget} 
                         handleOpenSavings = {handleOpenSavings} 
                         handleOpenAddExpense = {handleOpenAddExpense} 
+                        handleOpenTransactionDetails = {handleOpenTransactionDetails}
                     />
 
                     <Navbar/>
