@@ -189,12 +189,12 @@ const Signup = () => {
                             </i>
                             <div className={`signup-tooltip-container ${fnFocus ? '':'hide-tooltip'}`}>
                                 <div className={`signup-tooltip ${isFnValid ? 'fade-out-animation':'fade-in-animation'} `}>
-                                <h2>must be all letters</h2>
+                                    <h2>must be all letters</h2>
 
-                                <div className="absolute bottom-[-5px] right-[10px] bg-[#3fd9d7] z-[0] h-[20px] w-[20px] rounded-sm rotate-45  "></div>
-                            </div>
+                                    <div className="absolute bottom-[-5px] right-[10px] bg-[#3fd9d7] z-[0] h-[20px] w-[20px] rounded-sm rotate-45  "></div>
+                                </div>
                             
-                        </div>
+                            </div>
                         </div>
                     </div>
 

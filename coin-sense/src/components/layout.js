@@ -457,10 +457,10 @@ useEffect( ()=>{
                             <h2 className="text-xl font-light text-[#0081a7] text-center">Delete this transaction?</h2>
                             <ul className="delete-prompt-options flex cursor-default">
                                 <li onClick={handleDeleteTransaction} id='delete-transaction'
-                                    className="text-[#02bfc9] duration-150 bg-transparent border-[1px] border-[#02bfc9] active:text-white active:bg-[#02bfc9]"
+                                    className="white-button"
                                 >YES</li>
                                 <li onClick={()=>{setShowDeletePrompt(false);setShowTransactionDetails(true);}} 
-                                    className="text-white bg-[#02bfc9] border-[1px] border-[#02bfc9] duration-150 active:text-[#02bfc9] active:bg-transparent"
+                                    className="solid-button"
                                 >NO</li>
                             </ul>
                         </div>

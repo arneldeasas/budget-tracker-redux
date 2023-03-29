@@ -121,10 +121,10 @@
       "id": 2
     },
     {
-      "username": "peng123",
-      "password": "Peng123123",
-      "firstname": "peng",
-      "lastname": "de asas",
+      "username": "deasaspeng26",
+      "password": "Deasaspeng26",
+      "firstname": "Peng Jr",
+      "lastname": "De Asas",
       "calendar": [
         {
           "month": "March",
@@ -181,6 +181,56 @@
               "timeinseconds": "1680012286",
               "time": "10:04 PM",
               "date": "Tue, Mar 28, 2023"
+            },
+            {
+              "id": 7,
+              "day": "29",
+              "price": "41",
+              "type": "food",
+              "description": "gatorade",
+              "timeinseconds": "1680088278",
+              "time": "7:11 PM",
+              "date": "Wed, Mar 29, 2023"
+            },
+            {
+              "id": 8,
+              "day": "29",
+              "price": "15",
+              "type": "transport",
+              "description": "jeep",
+              "timeinseconds": "1680091920",
+              "time": "8:12 PM",
+              "date": "Wed, Mar 29, 2023"
+            },
+            {
+              "id": 9,
+              "day": "29",
+              "price": "50",
+              "type": "entertainment",
+              "description": "naka-4hrs ako sa comshop",
+              "timeinseconds": "1680092662",
+              "time": "8:24 PM",
+              "date": "Wed, Mar 29, 2023"
+            },
+            {
+              "id": 10,
+              "day": "29",
+              "price": "15",
+              "type": "food",
+              "description": "bumili ako ng coke",
+              "timeinseconds": "1680096392",
+              "time": "9:26 PM",
+              "date": "Wed, Mar 29, 2023"
+            },
+            {
+              "id": 11,
+              "day": "29",
+              "price": "35",
+              "type": "others",
+              "description": "",
+              "timeinseconds": "1680099128",
+              "time": "10:12 PM",
+              "date": "Wed, Mar 29, 2023"
             }
           ]
         },

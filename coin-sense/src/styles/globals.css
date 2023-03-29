@@ -389,11 +389,25 @@ input:valid + i+div{
   -moz-box-shadow: -4px 0px 6px 0px rgba(0,0,0,0.3);
 
 }
-
+.white-button{
+  @apply text-[#02bfc9] duration-150 bg-transparent border-[1px] border-[#02bfc9] active:text-white active:bg-[#02bfc9]
+}
+.solid-button{
+  @apply text-white bg-[#02bfc9] border-[1px] border-[#02bfc9] duration-150 active:text-[#02bfc9] active:bg-transparent
+}
 .account-panel-slide{
   @apply translate-x-[-400px]  ;
 }
 
+.edit-input{
+  @apply grow text-base  font-normal
+}
+.edit-input:focus{
+  @apply outline-none
+}
+.input-container{
+  @apply relative border-b-[1px] border-[#02bfc9] text-lg text-[#0081a7] font-light mb-4
+}
 .edit-icon{
   @apply absolute right-1 top-1 text-2xl leading-[0px] p-[2px] rounded-lg text-white ;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
@@ -410,6 +424,29 @@ input:valid + i+div{
 }
 .x-button:hover > i{
   @apply rotate-180
+}
+
+.account-edit-container > div{
+  @apply opacity-0;
+  animation: .5s slide-left ease-out forwards;
+  
+}
+.account-edit-container-reverse > div{
+  
+  animation: .5s slide-right ease-out reverse forwards;
+  
+}
+.account-edit-animation > div:nth-child(2){
+  animation-delay: .1s
+}
+.account-edit-animation > div:nth-child(3){
+  animation-delay: .2s
+}
+.account-edit-animation > div:nth-child(4){
+  animation-delay: .3s
+}
+.account-edit-animation > div:nth-child(5){
+  animation-delay: .4s
 }
 
 .prompt-box-container{
@@ -590,6 +627,27 @@ input:valid + i+div{
   100%{
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes slide-left{
+  0%{
+    opacity: 1;
+    transform: translateX(500px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slide-right{
+  0%{
+    opacity: 1;
+    transform: translateX(500px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
