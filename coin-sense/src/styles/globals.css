@@ -516,7 +516,15 @@ input:valid + i+div{
 .delete-prompt-options li{
   @apply p-1 w-[90px]  text-center rounded-full
 }
-
+.search-bar{
+  @apply rounded-full w-[90%] p-1 px-2 text-[#0081a7]  ;
+}
+.search-bar:focus{
+  @apply outline-none
+}
+.search-bar::placeholder{
+  @apply text-gray-300 
+}
 
 .profile-logo{
   @apply mx-auto my-2 mt-[100px] w-[8.5rem] h-[8.5rem] flex justify-center items-center rounded-full bg-slate-200

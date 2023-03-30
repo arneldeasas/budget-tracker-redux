@@ -14,6 +14,8 @@ const Login = () => {
 
     const [isLoggingIn, setIsLoggingIn] = useState(false);
     const [passwordMatch, setPasswordMatch] = useState(null);
+    const [userNotFound, setUserNotFound] = useState(false);
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -40,9 +42,8 @@ const Login = () => {
             const users = await dataLoader('http://localhost:8000/users');
 
             const user = users.filter(user=>user.username === username)
-            const id = user[0].id
-            console.log(id)
-
+            /* const id = user[0].id
+            console.log(id) */
             if(user.length > 0){
                 console.log(user)
                 console.log(password)
@@ -70,6 +71,9 @@ const Login = () => {
                     setIsLoggingIn(false);
                 }
             
+            }else{
+                setUserNotFound(true);
+                setIsLoggingIn(false);
             }
         }, 500);
         
@@ -94,6 +98,7 @@ const Login = () => {
                             onChange={(e)=>(setPassword(e.target.value))}
                             className="login-inputs" type="password" name="password" id="password" />
                         {passwordMatch === false && <h2 className="mt-3 font-bold italic text-center text-[#f67659]">incorrect password</h2>}
+                        {userNotFound && <h2 className="mt-3 font-bold italic text-center text-[#f67659]">user cannot be found</h2>}
                     </div>
                     
                     

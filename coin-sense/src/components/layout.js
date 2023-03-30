@@ -65,6 +65,8 @@ const Layout = () => {
     const [showDeletePrompt, setShowDeletePrompt] = useState(false);
     const [showTransactionDetails, setShowTransactionDetails] = useState(true);
 
+    const [isSearchFocused, setIsSearchFocused] = useState(false);
+
     const router = useRouter();
     //let {months} = router.query
     const {user:UserData} = useSelector(state=>state.global);
@@ -500,7 +502,8 @@ useEffect( ()=>{
 
                 </div>
             </div>
-                      
+
+                     
             {showStart && (
                 <div className="w-full h-[92%] fixed top-0 left-0 bg-gray-700/30 z-[2] backdrop-blur-md flex flex-col items-center justify-center text-white">
                     <h2 className="text-center text-xl drop-shadow-md">This month is empty</h2>
@@ -510,6 +513,23 @@ useEffect( ()=>{
                         
 
             <div className="dashboard w-full ">
+                {/* to be continued */}
+                {/* <div className="bg-gray-400/20 backdrop-blur-lg w-full h-full top-0 left-0 z-10 rounded-[34px] border-white border-[3px] absolute overflow-clip ">
+                    <div className={`bg-[#02bfc9] absolute w-[130%] h-[150px] left-[50%] top-[0%] translate-x-[-50%] duration-[.8s] ease-out ${isSearchFocused ? 'rounded-full h-[400px] w-[140%] translate-y-[-50%]':''}`}>
+                        
+                    </div> 
+                    <div className=" relative flex items-center justify-between mt-10 w-[90%] mx-auto rounded-full bg-white">
+                            <input 
+                                onFocus={()=>{setIsSearchFocused(true)}}
+                                onBlur={()=>{setIsSearchFocused(false)}}
+                                placeholder='search'
+                                className="search-bar block "
+                                type="text" name="search" id="search" 
+                            />
+                            <div className="mr-3 text-[#02bfc9]"><i class="fa-solid fa-magnifying-glass"></i></div>
+                    </div>
+                    
+                </div> */}
                 
                 {/* whole calendar */}
                 <div className="calendar-dropdown-container ">

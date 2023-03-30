@@ -123,7 +123,7 @@
     {
       "username": "deasaspeng26",
       "password": "Deasaspeng26",
-      "firstname": "Peng Jr",
+      "firstname": "Arnel Jr",
       "lastname": "De Asas",
       "calendar": [
         {
@@ -231,6 +231,36 @@
               "timeinseconds": "1680099128",
               "time": "10:12 PM",
               "date": "Wed, Mar 29, 2023"
+            },
+            {
+              "id": 12,
+              "day": "30",
+              "price": "25",
+              "type": "transport",
+              "description": "sumakay ako ng bus",
+              "timeinseconds": "1680143143",
+              "time": "10:25 AM",
+              "date": "Thu, Mar 30, 2023"
+            },
+            {
+              "id": 13,
+              "day": "30",
+              "price": "30",
+              "type": "others",
+              "description": "",
+              "timeinseconds": "1680143200",
+              "time": "10:26 AM",
+              "date": "Thu, Mar 30, 2023"
+            },
+            {
+              "id": 14,
+              "day": "30",
+              "price": "12",
+              "type": "transport",
+              "description": "e-bus",
+              "timeinseconds": "1680148270",
+              "time": "11:51 AM",
+              "date": "Thu, Mar 30, 2023"
             }
           ]
         },
