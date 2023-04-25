@@ -32,6 +32,7 @@ const Navbar = ({month}) => {
     const [isPasswordValid, setIsPasswordValid] = useState('');
 
     const router = useRouter();
+    const {monthInURL} = router.query
     const [openBackdrop,setOpenBackdrop]=useState(false);
     const [openAccPanel,setOpenAccPanel] = useState(false);
 
@@ -286,8 +287,8 @@ const Navbar = ({month}) => {
                 <button onClick={()=>{router.push('/login')}} className="text-white font-light bg-[#02bfc9] p-2 my-5 w-[80%] text-xl rounded-full block mx-auto">Logout</button>
             </div>
             <div className="flex justify-between px-3 w-full mx-[10%]">
-                <Link href={'/dashboard/'+month}><i className="fa-solid fa-house"></i></Link>
-                <Link href={`/dashboard/${month}/report`}><i className="fa-solid fa-chart-simple"></i></Link>
+                <Link href={'/dashboard/'+monthInURL}><i className="fa-solid fa-house"></i></Link>
+                <Link href={`/dashboard/${monthInURL}/report`}><i className="fa-solid fa-chart-simple"></i></Link>
                 <div onClick={()=>{setOpenBackdrop(true);setOpenAccPanel(true)}} ><i className="fa-solid fa-address-card"></i></div>
             </div>
             

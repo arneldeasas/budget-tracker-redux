@@ -97,10 +97,10 @@ useEffect( ()=>{
         dispatch(GetSelectedMonth(mm));
         setMonth(mm)
         const monthObj = data.calendar.filter(calendar=>calendar.month === monthInURL).map(calendar=> calendar.opened)
-        /* if(!monthsArray.includes(monthInURL)){
+        if(!monthsArray.includes(monthInURL)){
             console.log(monthInURL)
             router.push('/notFound')
-        } */
+        }
         setShowStart(!monthObj[0])
         console.log(monthObj,month)
 
