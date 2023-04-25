@@ -9,6 +9,7 @@ import { dataUploader, dataLoader } from "@/pages/signup";
 import { useDispatch, useSelector } from "react-redux";
 import { SetUserData, GetCurrentMonth, GetSelectedMonth } from "@/redux/global";
 import {  SetStat, SetTransactionDetails } from "@/redux/transaction";
+import AllTransactions from "./allTransactions";
 
 /* export async function getServerSideProps(context) {
     
@@ -65,7 +66,9 @@ const Layout = () => {
     const [showDeletePrompt, setShowDeletePrompt] = useState(false);
     const [showTransactionDetails, setShowTransactionDetails] = useState(true);
 
+    const [seeAllTransaction, setSeeAllTransaction] = useState(false);
     const [isSearchFocused, setIsSearchFocused] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
 
     const router = useRouter();
     //let {months} = router.query
@@ -292,6 +295,10 @@ useEffect( ()=>{
         
     }
 
+    const handleOpenSeeAll = ()=>{
+        setSeeAllTransaction(true);
+    }
+
 
     const handleCloseAnimation=(event)=>{
         
@@ -458,7 +465,7 @@ useEffect( ()=>{
                         <div>
                             <h2 className="text-xl font-light text-[#0081a7] text-center">Delete this transaction?</h2>
                             <ul className="delete-prompt-options flex cursor-default">
-                                <li onClick={handleDeleteTransaction} id='delete-transaction'
+                                <li onClick={(e)=>{setShowDeletePrompt(false);setShowTransactionDetails(true); handleDeleteTransaction(e)}} id='delete-transaction'
                                     className="white-button"
                                 >YES</li>
                                 <li onClick={()=>{setShowDeletePrompt(false);setShowTransactionDetails(true);}} 
@@ -513,23 +520,32 @@ useEffect( ()=>{
                         
 
             <div className="dashboard w-full ">
-                {/* to be continued */}
-                {/* <div className="bg-gray-400/20 backdrop-blur-lg w-full h-full top-0 left-0 z-10 rounded-[34px] border-white border-[3px] absolute overflow-clip ">
-                    <div className={`bg-[#02bfc9] absolute w-[130%] h-[150px] left-[50%] top-[0%] translate-x-[-50%] duration-[.8s] ease-out ${isSearchFocused ? 'rounded-full h-[400px] w-[140%] translate-y-[-50%]':''}`}>
+                
+
+                {/* See All Transactions */}
+                {seeAllTransaction && <div className="see-all-panel ">
+                    <div onClick={()=>{setSeeAllTransaction(false)}} className="text-important">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span onClick={()=>{setSearchValue('')}} className="ml-2">Back</span>
+                    </div>
+                    <div className={`bg-[#02bfc9] z-[-1] absolute w-[130%] h-[150px] left-[50%] top-[0%] translate-x-[-50%] duration-[.8s] ease-out ${isSearchFocused ? 'rounded-full h-[400px] w-[140%] translate-y-[-50%]':''}`}>
                         
                     </div> 
-                    <div className=" relative flex items-center justify-between mt-10 w-[90%] mx-auto rounded-full bg-white">
+                    <div className=" relative flex items-center justify-between mb-7 mt-14 w-[90%] mx-auto rounded-full bg-white">
                             <input 
                                 onFocus={()=>{setIsSearchFocused(true)}}
                                 onBlur={()=>{setIsSearchFocused(false)}}
-                                placeholder='search'
+                                value={searchValue}
+                                onChange={(e)=>{setSearchValue(e.target.value)}}
+                                placeholder='search day of the month'
                                 className="search-bar block "
                                 type="text" name="search" id="search" 
                             />
                             <div className="mr-3 text-[#02bfc9]"><i class="fa-solid fa-magnifying-glass"></i></div>
                     </div>
+                    <AllTransactions daySearched={searchValue} userData={UserData} month={month}/>
                     
-                </div> */}
+                </div>}
                 
                 {/* whole calendar */}
                 <div className="calendar-dropdown-container ">
@@ -566,6 +582,7 @@ useEffect( ()=>{
                         handleOpenSavings = {handleOpenSavings} 
                         handleOpenAddExpense = {handleOpenAddExpense} 
                         handleOpenTransactionDetails = {handleOpenTransactionDetails}
+                        handleOpenSeeAll = {handleOpenSeeAll}
                     />
 
                     <Navbar/>

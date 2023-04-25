@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 const DashboardContent = (props) => {
-    const {handleOpenBudget, handleOpenSavings, handleOpenAddExpense, handleOpenTransactionDetails} = props;
+    const {handleOpenBudget, handleOpenSavings, handleOpenAddExpense, handleOpenTransactionDetails, handleOpenSeeAll} = props;
     const {user:UserData, selectedMonth} = useSelector(state=>state.global)
     const {stat} = useSelector(state=>state.transaction);
     
@@ -77,7 +77,7 @@ const DashboardContent = (props) => {
                     <h2>Recent Transactions</h2>
                     <div className="flex gap-2 items-center">
                         <i onClick={handleOpenAddExpense} className="fa-solid fa-square-plus text-3xl block "></i>
-                        <div className="text-[12px] text-white p-1 px-2 rounded-full  bg-[#02bfc9]">See All</div>
+                        <div onClick={handleOpenSeeAll} className="text-[12px] text-white p-1 px-2 rounded-full  bg-[#02bfc9]">See All</div>
                     </div>
                 </div>
                 <div className="mt-3 p-2 max-h-[85%] overflow-y-scroll h-full">

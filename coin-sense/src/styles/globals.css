@@ -680,3 +680,10 @@ input:valid + i+div{
 .fade-out-animation{
   animation: .3s fade-out ease-in forwards reverse;
 }
+
+.text-important{
+  @apply text-white absolute top-[20px] left-[30px] z-50 !important;
+}
+.see-all-panel{
+  @apply bg-gray-400/20 backdrop-blur-lg w-full h-full top-0 left-0 z-10 rounded-[34px] border-white border-[3px] absolute overflow-clip
+}

@@ -270,6 +270,94 @@
           "budget": 0,
           "goal": 0,
           "expenses": []
+        },
+        {
+          "month": "April",
+          "opened": true,
+          "budget": "3000",
+          "goal": "300",
+          "expenses": [
+            {
+              "id": 1,
+              "day": "24",
+              "price": "23",
+              "type": "transport",
+              "description": "",
+              "timeinseconds": "1682333720",
+              "time": "6:55 PM",
+              "date": "Mon, Apr 24, 2023"
+            },
+            {
+              "id": 2,
+              "day": "24",
+              "price": "15",
+              "type": "school",
+              "description": "",
+              "timeinseconds": "1682333756",
+              "time": "6:55 PM",
+              "date": "Mon, Apr 24, 2023"
+            },
+            {
+              "id": 3,
+              "day": "24",
+              "price": "15",
+              "type": "food",
+              "description": "",
+              "timeinseconds": "1682336799",
+              "time": "7:46 PM",
+              "date": "Mon, Apr 24, 2023"
+            },
+            {
+              "id": 4,
+              "day": "24",
+              "price": "50",
+              "type": "health",
+              "description": "",
+              "timeinseconds": "1682339287",
+              "time": "8:28 PM",
+              "date": "Mon, Apr 24, 2023"
+            },
+            {
+              "id": 5,
+              "day": "25",
+              "price": "24",
+              "type": "food",
+              "description": "",
+              "timeinseconds": "1682411826",
+              "time": "4:37 PM",
+              "date": "Tue, Apr 25, 2023"
+            },
+            {
+              "id": 6,
+              "day": "25",
+              "price": "25",
+              "type": "school",
+              "description": "",
+              "timeinseconds": "1682411835",
+              "time": "4:37 PM",
+              "date": "Tue, Apr 25, 2023"
+            },
+            {
+              "id": 7,
+              "day": "25",
+              "price": "15",
+              "type": "others",
+              "description": "",
+              "timeinseconds": "1682411861",
+              "time": "4:37 PM",
+              "date": "Tue, Apr 25, 2023"
+            },
+            {
+              "id": 8,
+              "day": "25",
+              "price": "10",
+              "type": "school",
+              "description": "",
+              "timeinseconds": "1682412184",
+              "time": "4:43 PM",
+              "date": "Tue, Apr 25, 2023"
+            }
+          ]
         }
       ],
       "id": 3
