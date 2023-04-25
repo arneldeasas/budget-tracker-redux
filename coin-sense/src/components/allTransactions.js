@@ -1,10 +1,12 @@
 import Image from "next/image"
+import { useRouter } from "next/router"
 
 const AllTransactions = ({userData,month,daySearched}) => {
 
-   
-    const days = new Set([...userData.calendar.filter(calendar=>calendar.month===month)[0].expenses.map(expense=>expense.day)])
-    const monthTransactions = userData.calendar.filter(calendar=>calendar.month===month)[0]
+    const router = useRouter();
+    const {monthInURL} = router.query
+    const days = new Set([...userData.calendar.filter(calendar=>calendar.month===monthInURL)[0].expenses.map(expense=>expense.day)])
+    const monthTransactions = userData.calendar.filter(calendar=>calendar.month===monthInURL)[0]
     const dayArray = [...days]
     const filteredDays = monthTransactions.expenses.filter(expense=>expense.day.toString().includes(daySearched.toString())).map(expense=>expense.day)
     const filteredDaysArray = [...new Set([...filteredDays])]
@@ -14,7 +16,7 @@ const AllTransactions = ({userData,month,daySearched}) => {
             
             {daySearched.length === 0 && dayArray.map(day=>(
                 <div className=" w-full h-fit">
-                    <div>{month} {day}</div>
+                    <div>{monthInURL} {day}</div>
                     <div className="flex flex-col p-5 gap-3">
                         {monthTransactions.expenses.filter(expense=> expense.day === day).map(expense=>(
                             <div key={expense.id} id={expense.id} className="transaction-item">
@@ -41,7 +43,7 @@ const AllTransactions = ({userData,month,daySearched}) => {
             ))}
             {daySearched.length > 0 && filteredDaysArray.map(day=>(
                 <div className=" w-full h-fit">
-                    <div>{month} {day}</div>
+                    <div>{monthInURL} {day}</div>
                     <div className="flex flex-col p-5 gap-3">
                         {monthTransactions.expenses.filter(expense=> expense.day === day).map(expense=>(
                             <div key={expense.id} id={expense.id} className="transaction-item">

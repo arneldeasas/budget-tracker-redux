@@ -31,7 +31,7 @@ import AllTransactions from "./allTransactions";
 const Layout = () => {
     const clone = require('rfdc')();
     const today = new Date();
-    
+    const monthsArray = ['January','February','March','April','May','June','July','August','September','October','November','December']
     const dispatch = useDispatch();
 
     const [expenseAmount, setExpenseAmount] = useState('');
@@ -71,7 +71,8 @@ const Layout = () => {
     const [searchValue, setSearchValue] = useState('');
 
     const router = useRouter();
-    //let {months} = router.query
+    const {monthInURL} = router.query
+    console.log(monthInURL)
     const {user:UserData} = useSelector(state=>state.global);
     const {transactionItem, transactionDetails} = useSelector(state=> state.transaction)
     const [month, setMonth] = useState('')
@@ -95,17 +96,21 @@ useEffect( ()=>{
         let mm = localStorage.getItem('SelectedMonth')
         dispatch(GetSelectedMonth(mm));
         setMonth(mm)
-        const monthObj = data.calendar.filter(calendar=>calendar.month === mm).map(calendar=> calendar.opened)
+        const monthObj = data.calendar.filter(calendar=>calendar.month === monthInURL).map(calendar=> calendar.opened)
+        /* if(!monthsArray.includes(monthInURL)){
+            console.log(monthInURL)
+            router.push('/notFound')
+        } */
         setShowStart(!monthObj[0])
         console.log(monthObj,month)
 
-        const selectedMonthObj = data.calendar.filter(calendar=>calendar.month === mm)
+        const selectedMonthObj = data.calendar.filter(calendar=>calendar.month === monthInURL)
         
         dispatch(SetStat(selectedMonthObj[0]));
         
     })
     
-},[month, showStart, closedAddExpense, closedBudget,closedSavings,closedTransactionDetails])
+},[monthInURL, showStart, closedAddExpense, closedBudget,closedSavings,closedTransactionDetails])
    
     const chooseExpenseType = (e)=> {
         
@@ -550,7 +555,7 @@ useEffect( ()=>{
                 {/* whole calendar */}
                 <div className="calendar-dropdown-container ">
                     <div onClick={handleClickedDropDown} className="calendar-dropdown">
-                        <span className="block text-[20px] font-light">{month}</span>
+                        <span className="block text-[20px] font-light">{monthInURL}</span>
                         <i className="fa-solid fa-chevron-down"></i>
                     </div>
                     

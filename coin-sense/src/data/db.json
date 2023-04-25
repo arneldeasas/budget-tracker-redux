@@ -358,6 +358,20 @@
               "date": "Tue, Apr 25, 2023"
             }
           ]
+        },
+        {
+          "month": "February",
+          "opened": true,
+          "budget": 0,
+          "goal": 0,
+          "expenses": []
+        },
+        {
+          "month": "March",
+          "opened": true,
+          "budget": 0,
+          "goal": 0,
+          "expenses": []
         }
       ],
       "id": 3
